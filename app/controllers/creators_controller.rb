@@ -1,13 +1,29 @@
 class CreatorsController < ApplicationController
+  before_action :set_creator, only: [:edit, :update]
+
   def create
+    @creator = current_user.build_creator(creator_params)
+    if @creator.save
+      redirect_to creator_path, notice: "Profile created!"
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
-  def new
+  def update
+    if @creator.update(creator_params)
+      redirect_to creator_path, notice: "Profile updated!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def edit
   end
 
-  def update
+  private
+
+  def set_creator
+    @creator = current_user.creator
   end
 end
