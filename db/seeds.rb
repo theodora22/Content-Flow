@@ -146,7 +146,7 @@ Message.create!(
   content: <<~BODY
     Happy to help! Here are five angles that perform well for AI and productivity newsletters:
 
-    1. Tool teardowns — Pick one AI tool each week and show exactly how you use it in your workflow
+    1. Tool teardowns — Pick one AI tool each week and show exactly how you use it in your workflow. I recommend you Claude.
     2. Myth-busting — Address common misconceptions about AI in your field
     3. Case studies — Real examples of people saving time or creating better work with AI
     4. Trend commentary — Your take on the latest AI news, in plain language
