@@ -1,5 +1,6 @@
 class CreatorsController < ApplicationController
   before_action :set_creator, only: [ :show, :edit, :update ]
+  skip_before_action :check_creator_exist, only: [ :new, :create ]
 
   def show
   end
