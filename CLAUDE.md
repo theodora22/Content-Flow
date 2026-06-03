@@ -26,6 +26,10 @@ While working on a branch, suggest good moments to commit and briefly explain wh
 
 When making a refactor, always explain what is changing and why it is beneficial before making the change.
 
+## Design
+
+@DESIGN.md
+
 ## JavaScript
 
 All JavaScript must be written as Stimulus controllers. No inline scripts or bare `addEventListener` calls.
