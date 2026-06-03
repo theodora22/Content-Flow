@@ -10,6 +10,13 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
 
+  # Authed home. `get "dashboard"` expands to a single GET route:
+  #   GET /dashboard  ->  DashboardController#show   (named `dashboard_path`)
+  # Unlike `resources`, this generates ONLY this one route — no index/new/
+  # edit/etc. The `as:` isn't needed; Rails derives the `dashboard_path`
+  # helper from the path string "dashboard".
+  get "dashboard", to: "dashboard#show"
+
   resource  :creator, only: [:show, :new, :create, :edit, :update]
   
   resources :generated_ideas

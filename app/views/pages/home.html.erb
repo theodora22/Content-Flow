@@ -1,8 +1,27 @@
-<div>
-  <h1 class="font-bold text-4xl">Pages#home</h1>
-  <p>Find me in app/views/pages/home.html.erb</p>
+<% content_for :title, "ContentFlow." %>
 
-    <%= link_to "Log in", new_user_session_path %>
-    <%= link_to "Sign up", new_user_registration_path %>
-  <% end %>
+<div class="min-h-screen bg-[var(--cf-bg)] flex flex-col">
+  <nav class="flex justify-between items-center h-16 px-7">
+    <%= link_to "ContentFlow.", root_path, class: "cf-wordmark" %>
+    <%= link_to "log in", new_user_session_path, class: "cf-meta hover:text-black transition-colors duration-150 ease-in-out" %>
+  </nav>
+
+  <main class="flex-1 px-14 flex flex-col justify-center pb-16">
+    <h1 class="cf-hero text-[clamp(64px,16vw,190px)]">
+      START<br>CREATING<br>GREAT<br>CONTENT
+    </h1>
+
+    <p class="cf-body mt-8 max-w-xl">
+      Turn a single idea into Reel scripts and LinkedIn posts with a strong
+      hook — all in one flow.
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center gap-4">
+      <%= link_to "sign up", new_user_registration_path,
+            class: "rounded-[10px] bg-[var(--cf-orange)] text-[var(--cf-cream)] px-8 py-3.5 cf-action no-underline hover:bg-[var(--cf-orange-press)] active:translate-y-px transition-colors duration-150 ease-in-out" %>
+
+      <%= link_to "log in", new_user_session_path,
+            class: "rounded-[10px] border-[3px] border-[var(--cf-ink)] text-[var(--cf-ink)] px-8 py-3.5 cf-action no-underline hover:bg-[var(--cf-ink)] hover:text-[var(--cf-cream)] transition-colors duration-150 ease-in-out" %>
+    </div>
+  </main>
 </div>
