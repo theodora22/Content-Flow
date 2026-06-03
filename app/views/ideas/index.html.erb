@@ -1,0 +1,54 @@
+<% content_for :title, "Ideas" %>
+
+<div class="min-h-screen bg-[#fffdf3]">
+  <nav class="flex justify-between items-center h-16 px-7">
+    <%= link_to "ContentFlow.", root_path, class: "font-['Sen'] font-bold text-[#ff5733] text-[42px] tracking-[-0.04em] leading-none" %>
+    <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "text-[20px] font-['Sen'] text-[#737373] tracking-[-0.04em] hover:text-black transition-colors duration-150 ease-in-out" %>
+  </nav>
+
+  <div class="px-14 pt-8">
+    <div class="flex justify-between items-end gap-4">
+      <h1 class="font-bold text-[#ff5733] font-['Helvetica_Neue',_'Helvetica',_'Arial',_sans-serif] text-[clamp(72px,13vw,120px)] uppercase leading-[0.8] tracking-[-0.04em]">
+        HERE ARE<br>YOUR IDEAS
+      </h1>
+      <%= link_to new_idea_path, class: "shrink-0 flex items-end" do %>
+        <%= image_tag "big_plus.svg", class: "w-16 h-16 md:w-28 md:h-28", alt: "New idea" %>
+        <span class="font-bold text-base md:text-xl tracking-tight -ml-10">new idea</span>
+      <% end %>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse min-w-[500px]">
+        <thead>
+          <tr class="text-left font-['Helvetica_Neue',_'Helvetica',_'Arial',_sans-serif]">
+            <th class="pt-12 pb-3 font-bold text-[39px] tracking-[-0.04em] leading-none">title</th>
+            <th class="pt-12 pb-3 font-bold text-[39px] tracking-[-0.04em] leading-none">platform</th>
+            <th class="pt-12 pb-3 font-bold text-[39px] tracking-[-0.04em] leading-none">created</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tr><td colspan="4"><div class="h-1 bg-[#ff5733] rounded-sm"></div></td></tr>
+        <tbody class="font-['Helvetica_Neue',_'Helvetica',_'Arial',_sans-serif]">
+          <% if @ideas.any? %>
+            <% @ideas.each do |idea| %>
+              <tr class="border-b border-[#d9d9d9] hover:bg-[rgba(255,87,51,0.05)] transition-colors duration-150 ease-in-out">
+                <td class="py-[18px] font-bold text-[24px] tracking-[-0.04em]"><%= idea.title %></td>
+                <td class="py-[18px] font-bold text-[24px] tracking-[-0.04em]"><%= idea.topic %></td>
+                <td class="py-[18px] font-bold text-[24px] tracking-[-0.04em]"><%= idea.created_at.strftime("%b %d, %Y") %></td>
+                <td class="py-[18px] font-bold text-[24px] tracking-[-0.04em] text-right whitespace-nowrap">
+                  <%= link_to "view", idea, class: "hover:text-[#ff5733] transition-colors duration-150 ease-in-out" %> /
+                  <%= link_to "edit", edit_idea_path(idea), class: "hover:text-[#ff5733] transition-colors duration-150 ease-in-out" %> /
+                  <%= link_to "delete", idea, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "text-[#ff5733] hover:text-[#e8431f] transition-colors duration-150 ease-in-out" %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="4" class="py-10 text-center font-['Sen'] text-[20px] tracking-[-0.04em] text-[#737373]">No ideas yet. Click + to create your first one.</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
