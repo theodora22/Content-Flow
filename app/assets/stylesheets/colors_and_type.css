@@ -1,0 +1,135 @@
+:root {
+  --cf-orange: #FF5733;
+  --cf-orange-press: #E8431F;
+  --cf-cream: #FFFDF3;
+  --cf-ink: #000000;
+  --cf-white: #FFFFFF;
+  --cf-gray: #737373;
+  --cf-gray-line: #D9D9D9;
+
+  --cf-wave-faint: rgba(255, 87, 51, 0.05);
+  --cf-wave-soft: rgba(255, 253, 243, 0.20);
+
+  --cf-bg: var(--cf-cream);
+  --cf-bg-inverse: var(--cf-orange);
+  --cf-fg: var(--cf-ink);
+  --cf-fg-on-cream-accent: var(--cf-orange);
+  --cf-fg-inverse: var(--cf-cream);
+  --cf-fg-muted: var(--cf-gray);
+  --cf-accent: var(--cf-orange);
+  --cf-field-bg: var(--cf-white);
+  --cf-divider: var(--cf-orange);
+  --cf-divider-hair: var(--cf-gray-line);
+
+  --cf-font-display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --cf-font-ui: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --cf-font-soft: "Sen", "Helvetica Neue", Arial, sans-serif;
+
+  --cf-tracking: -0.04em;
+  --cf-leading-tight: 0.8;
+  --cf-leading-flat: 1;
+
+  --cf-display-hero: 190px;
+  --cf-display-xl: 120px;
+  --cf-display-lg: 68px;
+
+  --cf-text-xl: 42px;
+  --cf-text-lg: 39px;
+  --cf-text-md: 28px;
+  --cf-text-sm: 24px;
+  --cf-text-xs: 20px;
+
+  --cf-radius: 10px;
+  --cf-radius-sm: 5px;
+}
+
+@layer components {
+  .cf-row {
+    border-bottom: 1px solid var(--cf-divider-hair);
+    transition: background-color 0.15s ease-in-out;
+  }
+
+  .cf-row:hover {
+    background-color: var(--cf-wave-faint);
+  }
+
+  .cf-rule {
+    height: 4px;
+    background: var(--cf-divider);
+    border-radius: 2px;
+  }
+
+  .cf-wordmark {
+    font-family: var(--cf-font-soft);
+    font-weight: 700;
+    font-size: var(--cf-text-xl);
+    letter-spacing: var(--cf-tracking);
+    line-height: var(--cf-leading-flat);
+    color: var(--cf-fg-on-cream-accent);
+  }
+
+  .cf-hero {
+    font-family: var(--cf-font-display);
+    font-weight: 700;
+    font-size: var(--cf-display-hero);
+    text-transform: uppercase;
+    letter-spacing: var(--cf-tracking);
+    line-height: var(--cf-leading-tight);
+    color: var(--cf-fg-on-cream-accent);
+  }
+
+  .cf-headline {
+    font-family: var(--cf-font-display);
+    font-weight: 700;
+    font-size: var(--cf-display-xl);
+    text-transform: uppercase;
+    letter-spacing: var(--cf-tracking);
+    line-height: var(--cf-leading-tight);
+    color: var(--cf-fg-on-cream-accent);
+  }
+
+  .cf-h2 {
+    font-family: var(--cf-font-ui);
+    font-weight: 700;
+    font-size: var(--cf-text-lg);
+    letter-spacing: var(--cf-tracking);
+    line-height: var(--cf-leading-flat);
+    color: var(--cf-fg);
+  }
+
+  .cf-action {
+    font-family: var(--cf-font-ui);
+    font-weight: 700;
+    font-size: var(--cf-text-md);
+    letter-spacing: var(--cf-tracking);
+    line-height: var(--cf-leading-flat);
+    color: var(--cf-fg);
+  }
+
+  .cf-label {
+    font-family: var(--cf-font-ui);
+    font-weight: 700;
+    font-size: var(--cf-text-sm);
+    letter-spacing: var(--cf-tracking);
+    line-height: var(--cf-leading-flat);
+    color: var(--cf-fg);
+  }
+
+  .cf-body {
+    font-family: var(--cf-font-soft);
+    font-weight: 400;
+    font-size: var(--cf-text-xs);
+    letter-spacing: var(--cf-tracking);
+    line-height: 1.4;
+    color: var(--cf-fg);
+  }
+
+  .cf-meta {
+    font-family: var(--cf-font-soft);
+    font-weight: 400;
+    font-size: var(--cf-text-xs);
+    letter-spacing: var(--cf-tracking);
+    line-height: var(--cf-leading-flat);
+    color: var(--cf-fg-muted);
+  }
+}
