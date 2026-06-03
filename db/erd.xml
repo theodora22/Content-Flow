@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!-- SQL XML created by WWW SQL Designer, https://github.com/ondras/wwwsqldesigner/ -->
-<!-- Generated from db/schema.rb (version 2026_06_02_084341) — app-model tables only -->
+<!-- Generated from db/schema.rb (version 2026_06_03_104040) — app-model tables only -->
 <sql>
 <datatypes db="postgresql">
       <group label="Numeric" color="rgb(238,238,170)">
@@ -142,14 +142,6 @@
 <row name="id" null="0" autoincrement="1">
 <datatype>BIGINT</datatype>
 </row>
-<row name="user_id" null="0" autoincrement="0">
-<datatype>BIGINT</datatype>
-<relation table="users" row="id" />
-</row>
-<row name="idea_id" null="0" autoincrement="0">
-<datatype>BIGINT</datatype>
-<relation table="ideas" row="id" />
-</row>
 <row name="topic" null="1" autoincrement="0">
 <datatype>VARCHAR</datatype>
 <default>NULL</default></row>
@@ -167,12 +159,6 @@
 </row>
 <key type="PRIMARY" name="">
 <part>id</part>
-</key>
-<key type="INDEX" name="index_generated_ideas_on_user_id">
-<part>user_id</part>
-</key>
-<key type="INDEX" name="index_generated_ideas_on_idea_id">
-<part>idea_id</part>
 </key>
 </table>
 <table x="920" y="80" name="scripts">
