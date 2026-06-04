@@ -12,9 +12,11 @@ class CreatorsController < ApplicationController
   end
 
   def create
+    return redirect_to creator_path if current_user.creator.present?
     @creator = current_user.build_creator(creator_params)
     if @creator.save
-      redirect_to creator_path, notice: "Profile created!"
+      destination = current_user.onboarding_complete? ? creator_path : new_idea_path
+      redirect_to destination, notice: "Profile created!"
     else
       render :new, status: :unprocessable_entity
     end
@@ -39,6 +41,6 @@ class CreatorsController < ApplicationController
   end
 
   def creator_params
-    params.require(:creator).permit(:name, :topic, :goal, :audience)
+    params.require(:creator).permit(:name, :topic, :goal, :audience, :show)
   end
 end

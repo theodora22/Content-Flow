@@ -7,6 +7,12 @@ class User < ApplicationRecord
   has_one :creator
   has_many :ideas, dependent: :destroy
 
+  # as: :chattable tells Rails the foreign key lives in the polymorphic pair
+  # chattable_type/chattable_id on chats (not a conventional user_id). The User
+  # is the single top-level chat owner; brand context is reached via the
+  # creator. dependent: :destroy clears a user's chats when the user is removed.
+  has_many :chats, as: :chattable, dependent: :destroy
+
   def onboarding_complete?
     next_onboarding_step == :done
   end

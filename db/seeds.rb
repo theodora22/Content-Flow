@@ -14,10 +14,14 @@
 # db/schema.rb), so a parent row can't be deleted while child rows still point
 # at it. We therefore delete from the bottom of the chain upward:
 #
-#   linkedin_posts → scripts → ideas → creators → users
+#   chats → linkedin_posts → scripts → ideas → creators → users
 #
+# Chat.destroy_all goes first and clears *all* chats — including standalone
+# chats (chattable: nil) from the /chats flow, which no owner's
+# `dependent: :destroy` would reach. It cascades to messages via acts_as_chat.
 puts "Destroying existing records..."
 
+Chat.destroy_all
 LinkedinPost.destroy_all
 Script.destroy_all
 Idea.destroy_all
@@ -567,7 +571,30 @@ SEED_DATA.each do |data|
 end
 
 # ------------------------------------------------------------------------------
-# 4. Summary
+# 4. Sample chats (exercise the polymorphic `chattable` association — F1)
+# ------------------------------------------------------------------------------
+# A chat can belong to any chattable owner (User/Idea/Script/LinkedinPost) via
+# chattable_type/chattable_id, or stand alone (chattable: nil). We seed one of
+# each so the new association — and the existing standalone /chats flow — both
+# have demo data to poke at in the console or UI.
+puts "Seeding sample chats..."
+
+# Owned chat: idea.chats.create! sets chattable_type "Idea" + chattable_id.
+demo_idea = Idea.find_by!(title: "How AI is changing the way we create content")
+idea_chat = demo_idea.chats.create!
+idea_chat.messages.create!(role: "user",      content: "Help me brainstorm hooks for this idea.")
+idea_chat.messages.create!(role: "assistant", content: "Sure — bold, curious, or contrarian?")
+puts "  Created idea chat (chattable: Idea ##{demo_idea.id}) with #{idea_chat.messages.count} messages"
+
+# Standalone chat: no owner, mirrors the existing /chats flow.
+standalone = Chat.create!
+standalone.messages.create!(role: "user", content: "What should I post about today?")
+puts "  Created standalone chat (no owner) with #{standalone.messages.count} message"
+
+puts ""
+
+# ------------------------------------------------------------------------------
+# 5. Summary
 # ------------------------------------------------------------------------------
 puts "Seeding complete!"
 puts "  Users:          #{User.count}"
@@ -575,3 +602,5 @@ puts "  Creators:       #{Creator.count}"
 puts "  Ideas:          #{Idea.count}"
 puts "  Scripts:        #{Script.count}"
 puts "  LinkedIn posts: #{LinkedinPost.count}"
+puts "  Chats:          #{Chat.count} (#{Chat.where.not(chattable_id: nil).count} owned, #{Chat.where(chattable_id: nil).count} standalone)"
+puts "  Messages:       #{Message.count}"
