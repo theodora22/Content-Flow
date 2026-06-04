@@ -30,6 +30,7 @@ class IdeasController < ApplicationController
   end
 
   def generate_idea
+    generator = RubyLLM.chat
     redirect_to ideas_path
   end
 

@@ -8,7 +8,8 @@
 # The schema is the allow-list: only fields the schema *declares*
 # (`schema.properties.keys`) are written. So even if the model returns extra
 # keys, they are dropped — the LLM can never set an attribute the schema didn't
-# ask for. Pairing is by design: IdeaSchema -> Idea, ScriptSchema -> Script.
+# ask for. Pairing is by design: IdeaSchema -> Idea, ScriptSchema -> Script,
+# LinkedinPostSchema -> LinkedinPost.
 #
 # Usage (future generation path, once wired):
 #   response = chat.with_schema(IdeaSchema).ask("Generate an idea about ...")
