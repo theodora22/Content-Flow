@@ -1,5 +1,19 @@
-<h1>New Script for: <%= @idea.title %></h1>
+<% content_for :title, "New Script" %>
 
-<%= render "form", script: @script, url: idea_scripts_path(@idea) %>
+<div class="min-h-screen bg-[var(--cf-bg)]">
+  <div class="px-7 pt-8 pb-14">
+    <nav class="mb-8 cf-meta">
+      <%= link_to "ideas", ideas_path, class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <%= link_to @idea.title, idea_path(@idea), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <span>new script</span>
+    </nav>
 
-<%= link_to "Cancel", idea_path(@idea) %>
+    <h1 class="cf-headline text-[clamp(48px,8vw,120px)] mb-16">NEW SCRIPT</h1>
+
+    <div class="max-w-2xl">
+      <%= render "form", script: @script, url: idea_scripts_path(@idea) %>
+    </div>
+  </div>
+</div>

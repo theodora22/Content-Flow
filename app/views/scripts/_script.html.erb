@@ -1,4 +1,8 @@
-<strong><%= script.title %></strong>
-<%= script.style %> | <%= script.length %>
-<%= link_to "Show", script_path(script) %> |
-<%= link_to "Edit", edit_script_path(script) %>
+<div class="py-[18px] border-b border-[var(--cf-gray-line)] flex justify-between items-center">
+  <%= link_to script.title, script_path(script),
+        class: "cf-label font-normal hover:text-[var(--cf-orange)] transition-colors duration-150" %>
+  <div class="cf-meta flex gap-4 shrink-0">
+    <span><%= script.style.presence || "—" %></span>
+    <%= link_to "edit", edit_script_path(script), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+  </div>
+</div>

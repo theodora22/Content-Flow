@@ -1,5 +1,21 @@
-<h1>Edit Script</h1>
+<% content_for :title, "Edit Script" %>
 
-<%= render "form", script: @script, url: script_path(@script) %>
+<div class="min-h-screen bg-[var(--cf-bg)]">
+  <div class="px-7 pt-8 pb-14">
+    <nav class="mb-8 cf-meta">
+      <%= link_to "ideas", ideas_path, class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <%= link_to @idea.title, idea_path(@idea), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <%= link_to @script.title, script_path(@script), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <span>edit</span>
+    </nav>
 
-<%= link_to "Cancel", script_path(@script) %>
+    <h1 class="cf-headline text-[clamp(48px,8vw,120px)] mb-16">EDIT SCRIPT</h1>
+
+    <div class="max-w-2xl">
+      <%= render "form", script: @script, url: script_path(@script) %>
+    </div>
+  </div>
+</div>

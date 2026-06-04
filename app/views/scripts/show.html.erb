@@ -1,21 +1,47 @@
-<p>
-  <%= link_to "Ideas", ideas_path %> &rsaquo;
-  <%= link_to @idea.title, idea_path(@idea) %> /
-  Scripts &rsaquo;
-  <%= @script.title %>
-</p>
+<% content_for :title, @script.title %>
 
-<h1><%= @script.title %></h1>
+<div class="min-h-screen bg-[var(--cf-bg)]">
+  <div class="px-7 pt-8 pb-14">
+    <nav class="mb-2 cf-meta">
+      <%= link_to "ideas", ideas_path, class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <%= link_to @idea.title, idea_path(@idea), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <span><%= @script.title %></span>
+    </nav>
 
-<p><strong>Style:</strong> <%= @script.style %></p>
-<p><strong>Length:</strong> <%= @script.length %></p>
-<p><strong>Description:</strong> <%= @script.description %></p>
-<p><strong>System Prompt:</strong> <%= @script.system_prompt %></p>
+    <div class="flex justify-between items-start gap-4 mb-10">
+      <h1 class="cf-headline text-[clamp(48px,8vw,120px)]"><%= @script.title.upcase %></h1>
+      <div class="flex gap-6 shrink-0 pt-2">
+        <%= link_to "edit", edit_script_path(@script), class: "cf-action hover:text-[var(--cf-orange)] transition-colors duration-150" %>
+        <%= link_to "delete", script_path(@script),
+              data: { turbo_method: :delete, turbo_confirm: "Delete this script?" },
+              class: "cf-action text-[var(--cf-orange)] hover:text-[var(--cf-orange-press)] transition-colors duration-150" %>
+      </div>
+    </div>
 
-<%= link_to "Edit", edit_script_path(@script) %> |
-<%= link_to "Delete", script_path(@script), data: { turbo_method: :delete, turbo_confirm: "Delete this script?" } %> |
-<%= link_to "Back to idea", idea_path(@idea) %>
+    <div class="flex gap-6 cf-meta mb-8">
+      <% if @script.style.present? %><span><%= @script.style %></span><% end %>
+      <% if @script.length.present? %><span><%= @script.length %></span><% end %>
+    </div>
 
-<hr>
+    <% if @script.description.present? %>
+      <div class="max-w-2xl mb-10">
+        <p class="cf-label mb-2">description</p>
+        <p class="cf-body"><%= @script.description %></p>
+      </div>
+    <% end %>
 
-<%= link_to "Turn this into a LinkedIn post", new_script_linkedin_post_path(@script) %>
+    <% if @script.system_prompt.present? %>
+      <div class="max-w-2xl mb-10">
+        <p class="cf-label mb-2">system prompt</p>
+        <p class="cf-body whitespace-pre-wrap"><%= @script.system_prompt %></p>
+      </div>
+    <% end %>
+
+    <div class="cf-rule mb-6"></div>
+
+    <%= link_to "turn this into a linkedin post →", new_script_linkedin_post_path(@script),
+          class: "cf-action hover:text-[var(--cf-orange)] transition-colors duration-150" %>
+  </div>
+</div>

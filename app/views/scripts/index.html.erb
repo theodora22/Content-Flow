@@ -1,13 +1,57 @@
-<h1>Scripts for: <%= @idea.title %></h1>
+<% content_for :title, "Scripts" %>
 
-<%= link_to "Back to idea", idea_path(@idea) %>
+<div class="min-h-screen bg-[var(--cf-bg)]">
+  <div class="px-7 pt-8">
+    <nav class="mb-2 cf-meta">
+      <%= link_to "ideas", ideas_path, class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <%= link_to @idea.title, idea_path(@idea), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <span>scripts</span>
+    </nav>
 
-<ul>
-  <% @scripts.each do |script| %>
-    <li>
-      <%= render "script", script: script %>
-    </li>
-  <% end %>
-</ul>
+    <div class="flex justify-between items-end gap-4">
+      <h1 class="cf-headline text-[clamp(72px,13vw,120px)]">SCRIPTS</h1>
+      <%= link_to new_idea_script_path(@idea), class: "shrink-0 flex items-end" do %>
+        <%= image_tag "big_plus.svg", class: "w-16 h-16 md:w-28 md:h-28", alt: "New script" %>
+        <span class="cf-action -ml-10 font-normal">new script</span>
+      <% end %>
+    </div>
 
-<%= link_to "New script", new_idea_script_path(@idea) %>
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse min-w-[500px]">
+        <thead>
+          <tr class="text-left">
+            <th class="pt-12 pb-3 cf-h2 font-normal">title</th>
+            <th class="pt-12 pb-3 cf-h2 font-normal">style</th>
+            <th class="pt-12 pb-3 cf-h2 font-normal">length</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tr><td colspan="4"><div class="cf-rule"></div></td></tr>
+        <tbody>
+          <% if @scripts.any? %>
+            <% @scripts.each do |script| %>
+              <tr class="cf-row">
+                <td class="py-[18px] cf-label font-normal"><%= script.title %></td>
+                <td class="py-[18px] cf-label font-normal"><%= script.style.presence || "—" %></td>
+                <td class="py-[18px] cf-label font-normal"><%= script.length.presence || "—" %></td>
+                <td class="py-[18px] cf-label font-normal text-right whitespace-nowrap">
+                  <%= link_to "view", script_path(script), class: "hover:text-[var(--cf-orange)] transition-colors duration-150" %> /
+                  <%= link_to "edit", edit_script_path(script), class: "hover:text-[var(--cf-orange)] transition-colors duration-150" %> /
+                  <%= link_to "delete", script_path(script),
+                        data: { turbo_method: :delete, turbo_confirm: "Delete this script?" },
+                        class: "text-[var(--cf-orange)] hover:text-[var(--cf-orange-press)] transition-colors duration-150" %>
+                </td>
+              </tr>
+            <% end %>
+          <% else %>
+            <tr>
+              <td colspan="4" class="py-10 text-center cf-meta">no scripts yet.</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
