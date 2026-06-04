@@ -11,6 +11,7 @@
     <div class="flex justify-between items-start gap-4 mb-10">
       <h1 class="cf-headline text-[clamp(48px,8vw,120px)]"><%= @idea.title.upcase %></h1>
       <div class="flex gap-6 shrink-0 pt-2">
+        <%= link_to "refine with ai", new_chat_path(chattable_type: "Idea", chattable_id: @idea.id), class: "cf-action hover:text-[var(--cf-orange)] transition-colors duration-150" %>
         <%= link_to "edit", edit_idea_path(@idea), class: "cf-action hover:text-[var(--cf-orange)] transition-colors duration-150" %>
         <%= link_to "delete", @idea,
               data: { turbo_method: :delete, turbo_confirm: "Delete this idea?" },

@@ -22,7 +22,8 @@
     <%= f.label :title, "title", class: "block cf-label mb-2" %>
     <%= f.text_field :title,
           class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 h-12 cf-body focus:outline-none focus:border-[var(--cf-orange)]",
-          placeholder: "your idea title..." %>
+          placeholder: "your idea title...",
+          readonly: true %>
   </div>
 
   <div>
@@ -30,7 +31,8 @@
     <%= f.text_field :topic,
           class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 h-12 cf-body focus:outline-none focus:border-[var(--cf-orange)]",
           placeholder: "e.g. AI & productivity, fitness...",
-          list: "topic-suggestions" %>
+          list: "topic-suggestions",
+          readonly: true %>
     <% if current_user.creator&.topic.present? %>
       <datalist id="topic-suggestions">
         <option value="<%= current_user.creator.topic %>"></option>
@@ -41,6 +43,7 @@
   <div>
     <%= f.label :description, "description", class: "block cf-label mb-2" %>
     <%= f.text_area :description,
+    readonly: true,
           rows: 4,
           class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 py-3 cf-body focus:outline-none focus:border-[var(--cf-orange)] resize-none",
           placeholder: "what's this idea about..." %>

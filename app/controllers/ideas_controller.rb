@@ -29,6 +29,10 @@ class IdeasController < ApplicationController
   def edit
   end
 
+  def generate_idea
+    redirect_to ideas_path
+  end
+
   def update
     if @idea.update(idea_params)
       redirect_to idea_path(@idea), notice: "Idea updated."

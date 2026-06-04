@@ -1,4 +1,6 @@
 <%= form_with(model: chat, url: chats_path, class: "contents") do |form| %>
+  <%= form.hidden_field :chattable_type, value: @chattable_type %>
+  <%= form.hidden_field :chattable_id,   value: @chattable_id %>
   <% if chat.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
       <h2><%= pluralize(chat.errors.count, "error") %> prohibited this chat from being saved:</h2>

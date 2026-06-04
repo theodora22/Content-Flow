@@ -9,6 +9,9 @@ class ChatsController < ApplicationController
     @chat = Chat.new
     @selected_model = params[:model]
     @chat_models = available_chat_models
+    type = params[:chattable_type].presence
+    @chattable_type = CHATTABLE_TYPES.include?(type) ? type : nil
+    @chattable_id   = params[:chattable_id].presence
   end
 
   def create

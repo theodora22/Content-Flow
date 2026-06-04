@@ -1,0 +1,18 @@
+<%#
+  form_with url: points to a named route (not a model), so Rails won't try to
+  infer the method or path from a record — we pass both explicitly.
+  Equivalent explicit code: form_with url: generate_idea_ideas_path, method: :post
+%>
+<%= form_with url: generate_idea_ideas_path, method: :post, class: "space-y-4" do |f| %>
+  <div>
+    <%= f.label :prompt, "prompt", class: "block cf-label mb-2" %>
+    <%= f.text_area :prompt,
+          rows: 4,
+          name: "prompt",
+          class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 py-3 cf-body focus:outline-none focus:border-[var(--cf-orange)] resize-none",
+          placeholder: "describe the idea you want to generate..." %>
+  </div>
+
+  <%= f.submit "generate idea",
+        class: "bg-[var(--cf-orange)] text-[var(--cf-cream)] cf-label rounded-[var(--cf-radius)] px-8 h-12 cursor-pointer hover:bg-[var(--cf-orange-press)] active:translate-y-px transition-colors duration-150" %>
+<% end %>

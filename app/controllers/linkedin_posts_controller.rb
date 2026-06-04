@@ -4,7 +4,7 @@ class LinkedinPostsController < ApplicationController
   before_action :set_script
 
   def show
-    render plain: "authorized — post belongs to script #{@script.id} which is yours"
+    @linkedin_post = @script.linkedin_post
   end
 
   private

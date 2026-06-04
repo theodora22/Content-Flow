@@ -28,6 +28,9 @@ Rails.application.routes.draw do
   resources :generated_ideas
   
   resources :ideas do
+    collection do
+      post :generate_idea
+    end
     resources :scripts, shallow: true do
       resource :linkedin_post, only: [:show, :new, :create, :edit, :update, :destroy]
     end
