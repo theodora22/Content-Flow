@@ -1,37 +1,49 @@
-<div class="max-w-lg mx-auto mt-10 px-4">
-  <h1 class="text-2xl font-bold mb-6">Create your creator profile</h1>
+<% content_for :title, "Create Profile" %>
 
-  <%= form_with model: @creator, url: creator_path do |f| %>
-    <% if @creator.errors.any? %>
-      <div class="bg-red-50 border border-red-200 text-red-700 rounded p-4 mb-6">
-        <ul class="list-disc list-inside text-sm">
-          <% @creator.errors.full_messages.each do |msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
+<div class="min-h-screen bg-[var(--cf-bg)]">
+  <div class="px-7 pt-8">
+    <h1 class="cf-headline text-[clamp(48px,8vw,90px)]">
+      CREATE YOUR<br>PROFILE
+    </h1>
+
+    <div class="cf-rule mt-6 mb-10"></div>
+
+    <%= form_with model: @creator, url: creator_path do |f| %>
+      <% if @creator.errors.any? %>
+        <div class="mb-8">
+          <ul class="cf-meta text-[var(--cf-orange)]">
+            <% @creator.errors.full_messages.each do |msg| %>
+              <li><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="max-w-xl space-y-6">
+        <div>
+          <%= f.label :name, "name", class: "cf-label font-normal block mb-2" %>
+          <%= f.text_field :name, class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 h-12 cf-body" %>
+        </div>
+
+        <div>
+          <%= f.label :topic, "what do you create content about?", class: "cf-label font-normal block mb-2" %>
+          <%= f.text_field :topic, class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 h-12 cf-body" %>
+        </div>
+
+        <div>
+          <%= f.label :goal, "what is your content goal?", class: "cf-label font-normal block mb-2" %>
+          <%= f.text_field :goal, class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 h-12 cf-body" %>
+        </div>
+
+        <div>
+          <%= f.label :audience, "who is your target audience?", class: "cf-label font-normal block mb-2" %>
+          <%= f.text_field :audience, class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 h-12 cf-body" %>
+        </div>
+
+        <div class="pt-4">
+          <%= f.submit "create profile", class: "bg-[var(--cf-orange)] text-[var(--cf-cream)] rounded-[var(--cf-radius)] px-8 py-3 cf-label font-normal cursor-pointer hover:bg-[var(--cf-orange-press)] active:translate-y-px transition-colors duration-150 ease-in-out" %>
+        </div>
       </div>
     <% end %>
-
-    <div class="mb-4">
-      <%= f.label :name, class: "block text-sm font-medium mb-1" %>
-      <%= f.text_field :name, class: "w-full border rounded px-3 py-2" %>
-    </div>
-
-    <div class="mb-4">
-      <%= f.label :topic, "What do you create content about?", class: "block text-sm font-medium mb-1" %>
-      <%= f.text_field :topic, class: "w-full border rounded px-3 py-2" %>
-    </div>
-
-    <div class="mb-4">
-      <%= f.label :goal, "What is your content goal?", class: "block text-sm font-medium mb-1" %>
-      <%= f.text_field :goal, class: "w-full border rounded px-3 py-2" %>
-    </div>
-
-    <div class="mb-4">
-      <%= f.label :audience, "Who is your target audience?", class: "block text-sm font-medium mb-1" %>
-      <%= f.text_field :audience, class: "w-full border rounded px-3 py-2" %>
-    </div>
-
-    <%= f.submit "Create profile", class: "bg-black text-white rounded px-5 py-2 hover:bg-gray-800 cursor-pointer" %>
-  <% end %>
+  </div>
 </div>
