@@ -12,11 +12,17 @@ class GenerationSchemasTest < ActiveSupport::TestCase
     assert_equal %i[title description style length], ScriptSchema.properties.keys
   end
 
+  test "LinkedinPostSchema declares exactly the LinkedinPost generation fields" do
+    assert_equal %i[title hook body], LinkedinPostSchema.properties.keys
+  end
+
   test "schema fields mirror real columns on their model" do
     assert (IdeaSchema.properties.keys.map(&:to_s) - Idea.column_names).empty?,
            "IdeaSchema declares a field with no matching Idea column"
     assert (ScriptSchema.properties.keys.map(&:to_s) - Script.column_names).empty?,
            "ScriptSchema declares a field with no matching Script column"
+    assert (LinkedinPostSchema.properties.keys.map(&:to_s) - LinkedinPost.column_names).empty?,
+           "LinkedinPostSchema declares a field with no matching LinkedinPost column"
   end
 
   test "to_json_schema renders typed string properties the model can fill" do
