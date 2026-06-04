@@ -17,7 +17,13 @@ Rails.application.routes.draw do
   # helper from the path string "dashboard".
   get "dashboard", to: "dashboard#show"
 
-  resource  :creator, only: [:show, :new, :create, :edit, :update]
+  # Singular resource — one creator per user, accessed at /creator.
+  # only: [:show, :create, :update] generates three routes:
+  #   GET    /creator      → CreatorsController#show   (creator_path)
+  #   POST   /creator      → CreatorsController#create (creator_path)
+  #   PATCH  /creator      → CreatorsController#update (creator_path)
+  # No :new or :edit — the show action handles both display and form states.
+  resource  :creator, only: [ :show, :create, :update ]
   
   resources :generated_ideas
   

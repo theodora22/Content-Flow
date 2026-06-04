@@ -1,28 +1,37 @@
-<div class="max-w-lg mx-auto mt-10 px-4">
-  <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold">Creator Profile</h1>
-    <%= link_to "Edit profile", edit_creator_path, class: "text-sm border rounded px-4 py-2 hover:bg-gray-50" %>
+<% if @creator.persisted? %>
+  <%# Existing creator — readonly fields with pen-edit reveal animation %>
+  <div class="h-[calc(100vh-64px)] overflow-hidden bg-[var(--cf-bg)]" data-controller="form-reveal">
+    <div class="px-7 pt-8 h-full flex flex-col">
+      <div class="flex justify-between items-end gap-4 mb-10">
+        <h1 class="cf-headline text-[clamp(72px,13vw,120px)]">
+          YOUR<br>PROFILE
+        </h1>
+        <button type="button" data-action="form-reveal#reveal" class="shrink-0 hover:opacity-70 transition-opacity duration-150 ease-in-out flex items-end">
+          <div class="flex flex-col items-center">
+            <%= image_tag "pen_edit.svg", class: "w-16 h-16 md:w-28 md:h-28", alt: "edit" %>
+            <%= image_tag "pen_line.svg", class: "w-16 md:w-28 mt-1 h-1", alt: "" %>
+          </div>
+          <span class="cf-action font-normal ml-2">edit</span>
+        </button>
+      </div>
+      <div class="flex items-end justify-between">
+        <div class="max-w-lg">
+          <%= render "form", creator: @creator, editable: false %>
+        </div>
+        <button type="button" data-form-reveal-target="submit" data-action="form-reveal#submit" class="shrink-0 opacity-0 pointer-events-none rounded-[10px] border-2 border-[var(--cf-ink)] bg-transparent text-[var(--cf-ink)] px-8 py-3.5 cf-action font-normal cursor-pointer transition-all duration-300 ease-in-out hover:bg-[var(--cf-accent)] hover:border-[var(--cf-accent)] hover:text-[var(--cf-cream)]">update</button>
+      </div>
+    </div>
   </div>
-
-  <dl class="divide-y divide-gray-100">
-    <div class="py-4">
-      <dt class="text-sm font-medium text-gray-500 mb-1">Name</dt>
-      <dd class="text-base"><%= @creator.name %></dd>
+<% else %>
+  <%# New creator — form is immediately editable %>
+  <div class="min-h-screen bg-[var(--cf-bg)]">
+    <div class="px-7 pt-8">
+      <h1 class="cf-headline text-[clamp(72px,13vw,120px)] mb-8">
+        CREATE<br>YOUR PROFILE
+      </h1>
+      <div class="max-w-lg">
+        <%= render "form", creator: @creator, editable: true %>
+      </div>
     </div>
-
-    <div class="py-4">
-      <dt class="text-sm font-medium text-gray-500 mb-1">What do you create content about?</dt>
-      <dd class="text-base"><%= @creator.topic %></dd>
-    </div>
-
-    <div class="py-4">
-      <dt class="text-sm font-medium text-gray-500 mb-1">Content goal</dt>
-      <dd class="text-base"><%= @creator.goal %></dd>
-    </div>
-
-    <div class="py-4">
-      <dt class="text-sm font-medium text-gray-500 mb-1">Target audience</dt>
-      <dd class="text-base"><%= @creator.audience %></dd>
-    </div>
-  </dl>
-</div>
+  </div>
+<% end %>
