@@ -1,0 +1,43 @@
+<%#
+  singular resource — the URL is always script_linkedin_post_path(@script),
+  no :id needed. form_with model: [@script, @linkedin_post] would try to
+  infer script_linkedin_posts_path (plural), so we pass url: explicitly.
+  form_with checks linkedin_post.persisted? to set POST vs PATCH automatically.
+%>
+<%= form_with model: linkedin_post, url: url, class: "space-y-6" do |f| %>
+  <% if linkedin_post.errors.any? %>
+    <div class="border-l-4 border-[var(--cf-orange)] pl-4 py-2">
+      <ul class="cf-meta space-y-1">
+        <% linkedin_post.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title, "title", class: "block cf-label mb-2" %>
+    <%= f.text_field :title,
+          class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 h-12 cf-body focus:outline-none focus:border-[var(--cf-orange)]",
+          placeholder: "post title..." %>
+  </div>
+
+  <div>
+    <%= f.label :hook, "hook", class: "block cf-label mb-2" %>
+    <%= f.text_area :hook,
+          rows: 3,
+          class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 py-3 cf-body focus:outline-none focus:border-[var(--cf-orange)] resize-none",
+          placeholder: "your opening line that stops the scroll..." %>
+  </div>
+
+  <div>
+    <%= f.label :body, "body", class: "block cf-label mb-2" %>
+    <%= f.text_area :body,
+          rows: 8,
+          class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 py-3 cf-body focus:outline-none focus:border-[var(--cf-orange)] resize-none",
+          placeholder: "the rest of your post..." %>
+  </div>
+
+  <%= f.submit linkedin_post.persisted? ? "save changes" : "save post",
+        class: "bg-[var(--cf-orange)] text-[var(--cf-cream)] cf-label rounded-[var(--cf-radius)] px-8 h-12 cursor-pointer hover:bg-[var(--cf-orange-press)] active:translate-y-px transition-colors duration-150" %>
+<% end %>

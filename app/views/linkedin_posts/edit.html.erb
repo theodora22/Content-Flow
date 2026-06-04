@@ -1,4 +1,4 @@
-<% content_for :title, "New LinkedIn Post" %>
+<% content_for :title, "Edit LinkedIn Post" %>
 
 <div class="min-h-screen bg-[var(--cf-bg)]">
   <div class="px-7 pt-8 pb-14">
@@ -9,15 +9,17 @@
       <span class="mx-2">›</span>
       <%= link_to @script.title, script_path(@script), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
       <span class="mx-2">›</span>
-      <span>new linkedin post</span>
+      <%= link_to @linkedin_post.title, script_linkedin_post_path(@script), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <span>edit</span>
     </nav>
 
-    <h1 class="cf-headline text-[clamp(48px,8vw,120px)] mb-16">NEW LINKEDIN POST</h1>
+    <h1 class="cf-headline text-[clamp(48px,8vw,120px)] mb-16">EDIT POST</h1>
 
     <div class="max-w-2xl">
       <%#
-        singular resource — POST goes to /scripts/:script_id/linkedin_post (no :id).
-        script_linkedin_post_path(@script) generates that URL.
+        PATCH goes to /scripts/:script_id/linkedin_post — same path as show/new,
+        distinguished only by HTTP method. No :id because it's a singular resource.
       %>
       <%= render "form", linkedin_post: @linkedin_post, url: script_linkedin_post_path(@script) %>
     </div>
