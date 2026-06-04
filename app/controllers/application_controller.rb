@@ -14,12 +14,12 @@ class ApplicationController < ActionController::Base
 
   def check_creator_exist
     return unless user_signed_in?
-    redirect_to new_creator_path unless current_user.creator.present?
+    redirect_to creator_path unless current_user.creator.present?
   end
 
   def onboarding_path_for(user)
     case user.next_onboarding_step
-    when :creator then new_creator_path
+    when :creator then creator_path
     when :idea    then new_idea_path
     when :script  then new_idea_script_path(user.ideas.first)
     when :post    then new_script_linkedin_post_path(Script.where(idea: user.ideas).first)
