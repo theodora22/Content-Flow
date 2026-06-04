@@ -14,3 +14,4 @@ class ScriptsController < ApplicationController
     @script = current_user_scripts.find(params[:id])
   end
 end
+
