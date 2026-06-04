@@ -1,0 +1,51 @@
+<%= form_with model: script, url: url, class: "space-y-6" do |f| %>
+  <% if script.errors.any? %>
+    <div class="border-l-4 border-[var(--cf-orange)] pl-4 py-2">
+      <ul class="cf-meta space-y-1">
+        <% script.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :title, "title", class: "block cf-label mb-2" %>
+    <%= f.text_field :title,
+          class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 h-12 cf-body focus:outline-none focus:border-[var(--cf-orange)]",
+          placeholder: "script title..." %>
+  </div>
+
+  <div>
+    <%= f.label :style, "style", class: "block cf-label mb-2" %>
+    <%= f.text_field :style,
+          class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 h-12 cf-body focus:outline-none focus:border-[var(--cf-orange)]",
+          placeholder: "e.g. educational, storytelling, how-to..." %>
+  </div>
+
+  <div>
+    <%= f.label :length, "length", class: "block cf-label mb-2" %>
+    <%= f.text_field :length,
+          class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 h-12 cf-body focus:outline-none focus:border-[var(--cf-orange)]",
+          placeholder: "e.g. short, medium, long..." %>
+  </div>
+
+  <div>
+    <%= f.label :description, "description", class: "block cf-label mb-2" %>
+    <%= f.text_area :description,
+          rows: 4,
+          class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 py-3 cf-body focus:outline-none focus:border-[var(--cf-orange)] resize-none",
+          placeholder: "what is this script about..." %>
+  </div>
+
+  <div>
+    <%= f.label :system_prompt, "system prompt", class: "block cf-label mb-2" %>
+    <%= f.text_area :system_prompt,
+          rows: 6,
+          class: "w-full bg-[var(--cf-field-bg)] border border-[var(--cf-gray-line)] rounded-[var(--cf-radius)] px-4 py-3 cf-body focus:outline-none focus:border-[var(--cf-orange)] resize-none",
+          placeholder: "ai instructions for generating this script..." %>
+  </div>
+
+  <%= f.submit script.persisted? ? "save changes" : "save script",
+        class: "bg-[var(--cf-orange)] text-[var(--cf-cream)] cf-label rounded-[var(--cf-radius)] px-8 h-12 cursor-pointer hover:bg-[var(--cf-orange-press)] active:translate-y-px transition-colors duration-150" %>
+<% end %>

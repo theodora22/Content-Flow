@@ -1,6 +1,6 @@
 <%= render "shared/errors", record: creator %>
 
-<%= form_with model: creator, id: "creator-form", class: "flex flex-col gap-4" do |f| %>
+<%= form_with model: creator, url: creator_path, id: "creator-form", class: "flex flex-col gap-4" do |f| %>
   <div class="group relative pb-2">
     <%= f.label :name, "name", class: "cf-h2 font-normal" %>
     <%= f.text_field :name,
