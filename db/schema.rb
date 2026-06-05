@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_04_084328) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_05_084247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -47,6 +47,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_04_084328) do
     t.string "chattable_type"
     t.datetime "created_at", null: false
     t.bigint "model_id"
+    t.string "purpose"
     t.datetime "updated_at", null: false
     t.index ["chattable_type", "chattable_id"], name: "index_chats_on_chattable"
     t.index ["model_id"], name: "index_chats_on_model_id"
