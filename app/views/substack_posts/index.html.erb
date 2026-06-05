@@ -38,10 +38,30 @@
         to start your feed.
       </p>
     <% elsif @posts.empty? %>
-      <%# Sources exist but nothing fetched yet. %>
-      <p class="cf-meta py-10 text-center">
-        no posts yet — hit refresh to fetch your sources.
-      </p>
+      <%# Sources exist but no posts to show. Three distinct cases:
+          1. a source failed to fetch  → show why + link to manage it
+          2. a source hasn't been fetched yet (async job pending) → "fetching…"
+          3. everything fetched but genuinely empty → "no posts". %>
+      <% if (failed = @sources.select { |s| s.fetch_error.present? }).any? %>
+        <div class="cf-meta py-10 text-center">
+          <p class="text-[var(--cf-orange)]">couldn't fetch <%= pluralize(failed.size, "source") %>:</p>
+          <% failed.each do |s| %>
+            <p class="mt-1"><%= s.name.presence || s.handle || s.feed_url %> — <%= s.fetch_error %></p>
+          <% end %>
+          <p class="mt-3">
+            <%= link_to "manage sources", substack_sources_path,
+                  class: "text-[var(--cf-orange)] hover:text-[var(--cf-orange-press)] transition-colors duration-150" %>
+          </p>
+        </div>
+      <% elsif @sources.any? { |s| s.fetched_at.nil? } %>
+        <p class="cf-meta py-10 text-center">
+          fetching your posts — refresh in a moment.
+        </p>
+      <% else %>
+        <p class="cf-meta py-10 text-center">
+          no posts yet — hit refresh to fetch your sources.
+        </p>
+      <% end %>
     <% else %>
       <div class="overflow-x-auto">
         <table class="w-full border-collapse min-w-[600px]">

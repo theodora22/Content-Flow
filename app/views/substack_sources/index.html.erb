@@ -31,6 +31,11 @@
               <tr class="cf-row">
                 <td class="py-[18px] cf-label font-normal">
                   <%= source.name.presence || source.handle || "unnamed" %>
+                  <% if source.fetch_error.present? %>
+                    <p class="cf-meta mt-1 font-normal leading-snug text-[var(--cf-orange)]">
+                      <%= source.fetch_error %>
+                    </p>
+                  <% end %>
                 </td>
                 <td class="py-[18px] cf-label font-normal cf-meta">
                   <%= source.handle ? "#{source.handle}.substack.com" : source.feed_url %>

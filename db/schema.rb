@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_05_095043) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_05_144720) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -307,6 +307,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_095043) do
   create_table "substack_sources", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "feed_url", null: false
+    t.string "fetch_error"
     t.datetime "fetched_at"
     t.string "handle"
     t.string "name"
@@ -344,8 +345,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_095043) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chats", "models"
   add_foreign_key "creators", "users"
-  add_foreign_key "generated_ideas", "ideas"
-  add_foreign_key "generated_ideas", "users"
   add_foreign_key "ideas", "users"
   add_foreign_key "linkedin_posts", "scripts"
   add_foreign_key "messages", "chats"

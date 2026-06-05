@@ -26,6 +26,14 @@ class SubstackPostsControllerTest < ActionDispatch::IntegrationTest
     assert_select "p", text: /no sources yet/i
   end
 
+  test "index links each post to a seeded generate_idea chat" do
+    post = @source.substack_posts.create!(guid: "seed", title: "Hot take", published_at: 1.day.ago)
+    get substack_posts_path
+    assert_select "a[href=?]",
+                  new_chat_path(purpose: "generate_idea", substack_post_id: post.id),
+                  text: /use as inspiration/i
+  end
+
   test "index shows only current user's posts" do
     other = User.create!(email: "other-posts@cf.test", password: "password123")
     Creator.create!(user: other, name: "X", topic: "X", goal: "X", audience: "X")
