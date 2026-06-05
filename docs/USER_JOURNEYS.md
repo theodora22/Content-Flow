@@ -198,11 +198,17 @@ LinkedinPost `[:title,:hook,:body]`. Always `symbolize_keys.slice(*permitted)` b
 `GenerationPlan` (a PORO in `app/services/`) holds the table above as the single source of truth;
 `current_user_linkedin_posts` is added to `UserScopedResource`.
 
-> **Endpoint risk (gated):** structured output via `with_schema` is **not guaranteed** on the
-> GitHub-Models/Azure `gpt-4o-mini` endpoint. A **day-1 spike (F-3)** verifies it; if it fails the
-> prompt-JSON fallback becomes the default path. Verified in `ruby_llm-1.15.0`:
-> `chat.with_schema` delegates to the in-memory chat (`chat_methods.rb:154`) and the gem silently
-> falls back to the raw String on a parse failure (`chat.rb:172`).
+> **Endpoint risk (GATE RESOLVED — F-3, 2026-06-05):** structured output via `with_schema`
+> **works reliably** against the configured GitHub-Models/Azure `gpt-4o-mini` endpoint. The day-1
+> spike ran `with_schema(IdeaSchema/ScriptSchema/LinkedinPostSchema).ask(...)` live (incl. the
+> transient `with_instructions` + `with_schema` pattern F-2 uses) and got a parsed **Hash** with
+> all schema keys on **6/6** calls. **Decision: F-2 builds on `with_schema` as the PRIMARY path.**
+> The prompt-JSON fallback is built and verified live anyway as a safety net (model/endpoint
+> regression). Both paths are wrapped in `StructuredExtraction` (`app/services/`), which returns a
+> Hash from `with_schema` first and falls back to prompt-JSON + fence-strip + `JSON.parse` only if
+> the gem returns a raw String. Verified in `ruby_llm-1.15.0`: `chat.with_schema` delegates to the
+> in-memory chat (`chat_methods.rb:154`) and the gem silently falls back to the raw String on a
+> parse failure (`chat.rb:172`).
 
 ### Fold-in cleanup
 
@@ -342,11 +348,13 @@ already slices to the schema's property keys.
   conversation. Output every field; for any field the conversation did not discuss, return its
   current value unchanged."* — this both overcomes the bias and implements the chosen
   **overwrite-all-keep-undiscussed** behavior.
-- **`with_schema` reliability:** not guaranteed on the GitHub-Models/Azure `gpt-4o-mini` endpoint;
-  the gem silently returns a raw String on parse failure. **Reuse the prompt-JSON fallback from
-  #84** (F-3 spike — shared with the generate track): retry schema-less, instruct "respond with
-  only a JSON object with keys …", strip ```` ```json ```` fences, `JSON.parse` with rescue.
-  `StructuredContent` already raises `InvalidPayload` on bad JSON — rescue it in the controller.
+- **`with_schema` reliability (F-3 verified 2026-06-05):** confirmed reliable on the
+  GitHub-Models/Azure `gpt-4o-mini` endpoint (6/6 live calls returned a parsed Hash), so
+  `with_schema` is the primary path. The gem can still silently return a raw String on parse
+  failure, so **reuse `StructuredExtraction` (`app/services/`) from #84** — it tries `with_schema`
+  first and falls back to schema-less prompt-JSON (instruct "respond with only a JSON object with
+  keys …", strip ```` ```json ```` fences, `JSON.parse` with rescue), raising `ExtractionFailed`
+  if both fail. `StructuredContent` then maps the Hash onto the record.
 - **Validation failure:** non-bang `save`; on `false` re-render `chats/show` with
   `status: :unprocessable_entity` and `record.errors.full_messages`.
 - **Singular post redirect:** `script_linkedin_post_path(record.script)` (no id).
