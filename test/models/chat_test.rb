@@ -42,4 +42,26 @@ class ChatTest < ActiveSupport::TestCase
       idea.destroy
     end
   end
+
+  test "purpose persists and exposes a predicate + scope" do
+    chat = @user.chats.create!(purpose: "generate_idea")
+
+    assert_equal "generate_idea", chat.reload.purpose
+    assert chat.generate_idea?
+    assert_includes Chat.generate_idea, chat
+  end
+
+  test "a nil purpose is valid (plain free-form chat)" do
+    chat = Chat.new
+
+    assert chat.valid?
+    assert_nil chat.purpose
+  end
+
+  test "an unknown purpose is a validation error, not a raised ArgumentError" do
+    chat = Chat.new(purpose: "bogus")
+
+    assert_not chat.valid?
+    assert_includes chat.errors[:purpose], "is not included in the list"
+  end
 end

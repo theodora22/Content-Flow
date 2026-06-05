@@ -1,4 +1,7 @@
 <%= form_with(model: chat, url: chats_path, class: "contents") do |form| %>
+  <%# Carries the chat's purpose through to #create. Renders nothing for a plain
+      free-form chat (@purpose is nil), so that flow is unchanged. %>
+  <%= form.hidden_field :purpose, value: @purpose %>
   <% if chat.errors.any? %>
     <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
       <h2><%= pluralize(chat.errors.count, "error") %> prohibited this chat from being saved:</h2>

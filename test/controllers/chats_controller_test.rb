@@ -54,4 +54,30 @@ class ChatsControllerTest < ActionDispatch::IntegrationTest
 
     assert_nil Chat.last.chattable
   end
+
+  test "create persists an allowlisted purpose" do
+    post chats_path, params: { chat: { prompt: "hi", purpose: "generate_idea" } }
+
+    assert_equal "generate_idea", Chat.last.purpose
+  end
+
+  test "create collapses an unknown purpose to nil (plain chat, unchanged)" do
+    post chats_path, params: { chat: { prompt: "hi", purpose: "bogus" } }
+
+    assert_nil Chat.last.purpose
+  end
+
+  test "new renders an allowlisted purpose into the form's hidden field" do
+    get new_chat_path(purpose: "generate_idea")
+
+    assert_response :success
+    assert_select "input[type=hidden][name='chat[purpose]'][value=generate_idea]"
+  end
+
+  test "new ignores an unknown purpose (hidden field stays empty)" do
+    get new_chat_path(purpose: "bogus")
+
+    assert_response :success
+    assert_select "input[type=hidden][name='chat[purpose]'][value=bogus]", count: 0
+  end
 end

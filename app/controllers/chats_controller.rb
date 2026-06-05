@@ -6,7 +6,8 @@ class ChatsController < ApplicationController
   end
 
   def new
-    @chat = Chat.new
+    @purpose = purpose
+    @chat = Chat.new(purpose: @purpose, chattable: default_chattable)
     @selected_model = params[:model]
     @chat_models = available_chat_models
   end
@@ -16,7 +17,8 @@ class ChatsController < ApplicationController
     if prompt.present?
       @chat = Chat.create!(
         model: params.dig(:chat, :model).presence,
-        chattable: chattable
+        chattable: chattable,
+        purpose: purpose
       )
 
       # Persist the creator-aware system prompt as a role: :system message
@@ -62,5 +64,26 @@ class ChatsController < ApplicationController
     return unless type && id && CHATTABLE_TYPES.include?(type)
 
     type.constantize.find(id)
+  end
+
+  # The MVP generation purposes. Allow-listed exactly like CHATTABLE_TYPES so an
+  # arbitrary string from the query/form never reaches the enum (which would
+  # otherwise fail validation). Anything off the list collapses to nil — a plain
+  # free-form chat, behavior unchanged.
+  PURPOSES = %w[generate_idea generate_script generate_linkedin_post].freeze
+
+  # Read the requested purpose from either source: it arrives as a top-level
+  # query param on the #new redirect (/chats/new?purpose=generate_idea) and as
+  # the form's hidden chat[purpose] field on #create. One helper serves both.
+  def purpose
+    requested = params[:purpose].presence || params.dig(:chat, :purpose).presence
+    requested if PURPOSES.include?(requested)
+  end
+
+  # For #new only: seed the form's owner. Top-level chats hang off the User (see
+  # USER_JOURNEYS decision 4), so a generate_idea chat with no explicit owner
+  # defaults to the current user; any explicitly-passed chattable wins.
+  def default_chattable
+    chattable || (current_user if purpose == "generate_idea")
   end
 end
