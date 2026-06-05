@@ -67,13 +67,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_095043) do
   create_table "generated_ideas", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
-    t.bigint "idea_id"
     t.string "title"
     t.string "topic"
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
-    t.index ["idea_id"], name: "index_generated_ideas_on_idea_id"
-    t.index ["user_id"], name: "index_generated_ideas_on_user_id"
   end
 
   create_table "ideas", force: :cascade do |t|
