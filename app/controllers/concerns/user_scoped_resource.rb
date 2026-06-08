@@ -15,4 +15,12 @@ module UserScopedResource
   def current_user_linkedin_posts
     LinkedinPost.joins(script: :idea).where(ideas: { user_id: current_user.id })
   end
+
+  def current_user_twitter_posts
+    TwitterPost.joins(script: :idea).where(ideas: { user_id: current_user.id })
+  end
+
+  def current_user_instagram_posts
+    InstagramPost.joins(script: :idea).where(ideas: { user_id: current_user.id })
+  end
 end

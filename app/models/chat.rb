@@ -24,6 +24,8 @@ class Chat < ApplicationRecord
   enum :purpose, {
     generate_idea: "generate_idea",
     generate_script: "generate_script",
-    generate_linkedin_post: "generate_linkedin_post"
+    generate_linkedin_post: "generate_linkedin_post",
+    generate_twitter_post: "generate_twitter_post",
+    generate_instagram_post: "generate_instagram_post"
   }, validate: { allow_nil: true }
 end

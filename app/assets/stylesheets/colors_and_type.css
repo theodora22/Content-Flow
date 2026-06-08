@@ -303,4 +303,12 @@
   .cf-errors li + li {
     margin-top: 0.25rem;
   }
+
+  /* Drives fill on inlined SVGs that use var(--fill-0) */
+  .icon-platform {
+    transition: opacity 0.15s ease;
+  }
+  .icon-platform:hover {
+    --fill-0: var(--cf-orange);
+  }
 }

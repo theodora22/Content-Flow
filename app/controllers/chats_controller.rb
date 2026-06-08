@@ -64,7 +64,7 @@ class ChatsController < ApplicationController
   #
   # The type is allowlisted before constantize so a request can never coerce
   # an arbitrary class name into a model load.
-  CHATTABLE_TYPES = %w[User Idea Script LinkedinPost].freeze
+  CHATTABLE_TYPES = %w[User Idea Script LinkedinPost TwitterPost InstagramPost].freeze
 
   def chattable
     type = (params[:chattable_type] || params.dig(:chat, :chattable_type)).presence
@@ -78,7 +78,7 @@ class ChatsController < ApplicationController
   # arbitrary string from the query/form never reaches the enum (which would
   # otherwise fail validation). Anything off the list collapses to nil — a plain
   # free-form chat, behavior unchanged.
-  PURPOSES = %w[generate_idea generate_script generate_linkedin_post].freeze
+  PURPOSES = %w[generate_idea generate_script generate_linkedin_post generate_twitter_post generate_instagram_post].freeze
 
   # Read the requested purpose from either source: it arrives as a top-level
   # query param on the #new redirect (/chats/new?purpose=generate_idea) and as

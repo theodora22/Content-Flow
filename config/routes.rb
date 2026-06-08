@@ -61,6 +61,8 @@ Rails.application.routes.draw do
   resources :ideas do
     resources :scripts, shallow: true do
       resource :linkedin_post, only: [:show, :new, :create, :edit, :update, :destroy]
+      resource :twitter_post, only: [:show, :new, :create, :edit, :update, :destroy]
+      resource :instagram_post, only: [:show, :new, :create, :edit, :update, :destroy]
     end
   end
 

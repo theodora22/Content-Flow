@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_06_05_144720) do
+ActiveRecord::Schema[8.1].define(version: 2026_06_08_083918) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -80,6 +80,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_144720) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_ideas_on_user_id"
+  end
+
+  create_table "instagram_posts", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.text "hook"
+    t.bigint "script_id", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["script_id"], name: "index_instagram_posts_on_script_id"
   end
 
   create_table "linkedin_posts", force: :cascade do |t|
@@ -329,6 +339,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_144720) do
     t.index ["tool_call_id"], name: "index_tool_calls_on_tool_call_id", unique: true
   end
 
+  create_table "twitter_posts", force: :cascade do |t|
+    t.text "body"
+    t.datetime "created_at", null: false
+    t.text "hook"
+    t.bigint "script_id", null: false
+    t.string "title"
+    t.datetime "updated_at", null: false
+    t.index ["script_id"], name: "index_twitter_posts_on_script_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
@@ -346,6 +366,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_144720) do
   add_foreign_key "chats", "models"
   add_foreign_key "creators", "users"
   add_foreign_key "ideas", "users"
+  add_foreign_key "instagram_posts", "scripts"
   add_foreign_key "linkedin_posts", "scripts"
   add_foreign_key "messages", "chats"
   add_foreign_key "messages", "models"
@@ -360,4 +381,5 @@ ActiveRecord::Schema[8.1].define(version: 2026_06_05_144720) do
   add_foreign_key "substack_posts", "substack_sources"
   add_foreign_key "substack_sources", "users"
   add_foreign_key "tool_calls", "messages"
+  add_foreign_key "twitter_posts", "scripts"
 end
