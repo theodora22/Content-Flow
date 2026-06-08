@@ -3,53 +3,47 @@
 <div class="min-h-screen">
   <div class="px-7 pt-8">
     <h1 class="cf-headline text-[clamp(72px,13vw,120px)]">
-      DASHBOARD
+      Hey there<% if current_user.creator&.name.present? %>,<br><%= current_user.creator.name %><% end %>
     </h1>
-    <div class="cf-rule"></div>
 
-    <p class="cf-body mt-8">
-      Welcome back<% if current_user.creator&.name.present? %>, <%= current_user.creator.name %><% end %>.
-      Your workspace lives here
-    </p>
+    <div class="mt-12 mb-8">
+      <p class="cf-h2 font-normal mb-1">
+        Your workspace lives here
+      </p>
+      <div class="cf-rule"></div>
+    </div>
 
     <% if @ideas.any? %>
-      <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <% @ideas.each do |idea| %>
-          <div class="bg-[var(--cf-white)] rounded-[var(--cf-radius)] overflow-hidden border border-[var(--cf-gray-line)]">
-            <%# Orange header band %>
-            <div class="bg-[var(--cf-orange)] px-5 py-4">
-              <%= link_to idea_path(idea), class: "group" do %>
-                <p class="cf-h2 text-[var(--cf-cream)] group-hover:opacity-80 transition-opacity duration-150 leading-tight">
+          <div class="bg-[var(--cf-white)] rounded-[var(--cf-radius)] border border-[var(--cf-gray-line)] p-5 hover:border-[var(--cf-ink)] transition-colors duration-200">
+            <div class="mb-5">
+              <%= link_to idea_path(idea), class: "block group" do %>
+                <h3 class="cf-h2 text-[var(--cf-ink)] group-hover:text-[var(--cf-orange)] transition-colors leading-tight">
                   <%= idea.title %>
-                </p>
+                </h3>
               <% end %>
               <% if idea.topic.present? %>
-                <p class="cf-meta text-[var(--cf-cream)] opacity-70 mt-1"><%= idea.topic %></p>
+                <p class="cf-meta text-[var(--cf-gray)] mt-1"><%= idea.topic %></p>
               <% end %>
             </div>
 
-            <%# Scripts list %>
-            <div class="px-5 py-4">
-              <% if idea.scripts.any? %>
-                <p class="cf-meta mb-3">scripts</p>
-                <ul>
-                  <% idea.scripts.each_with_index do |script, i| %>
-                    <li class="<%= i > 0 ? "border-t border-[var(--cf-gray-line)]" : "" %> py-3">
-                      <%= link_to script_path(script), class: "cf-label font-normal hover:text-[var(--cf-orange)] transition-colors duration-150 block" do %>
-                        <%= script.title.presence || "untitled script" %>
-                      <% end %>
-                      <% if script.style.present? || script.length.present? %>
-                        <p class="cf-meta mt-0.5">
-                          <%= [script.style, script.length].compact.join(" · ") %>
-                        </p>
-                      <% end %>
-                    </li>
-                  <% end %>
-                </ul>
-              <% else %>
-                <p class="cf-meta py-2">no scripts yet.</p>
-              <% end %>
-            </div>
+            <% if idea.scripts.any? %>
+              <div class="space-y-3">
+                <% idea.scripts.each do |script| %>
+                  <div>
+                    <%= link_to script_path(script), class: "cf-label font-normal text-[var(--cf-ink)] hover:text-[var(--cf-orange)] transition-colors block" do %>
+                      <%= script.title.presence || "untitled script" %>
+                    <% end %>
+                    <% if script.style.present? || script.length.present? %>
+                      <p class="cf-meta mt-0.5 text-[var(--cf-gray)]"><%= [script.style, script.length].compact.join(" · ") %></p>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+            <% else %>
+              <p class="cf-meta text-[var(--cf-gray)] py-1">no scripts yet.</p>
+            <% end %>
           </div>
         <% end %>
       </div>
