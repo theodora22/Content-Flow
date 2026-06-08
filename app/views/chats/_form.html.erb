@@ -33,6 +33,7 @@
     <%= form.text_area :prompt, rows: 4,
           placeholder: "what would you like to discuss?",
           autofocus: true,
+          value: local_assigns[:seed_prompt],
           class: "cf-textarea mt-2" %>
   </div>
 
