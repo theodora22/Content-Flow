@@ -60,7 +60,7 @@ SEED_DATA = [
           description: "A short educational script covering the top AI tools transforming content creation.",
           system_prompt: "You are a knowledgeable tech content creator. Write engaging, concise scripts."
         },
-        post: {
+        linkedin_post: {
           title: "AI tools that actually work",
           hook: "I spent 30 days testing every AI content tool on the market. Here's what actually works:",
           body: <<~BODY
@@ -123,7 +123,7 @@ SEED_DATA = [
           description: "A conversational script challenging popular productivity advice.",
           system_prompt: "You are a productivity coach. Write practical, myth-busting scripts."
         },
-        post: {
+        linkedin_post: {
           title: "The 2-hour workday myth",
           hook: "Everyone's selling you a 2-hour workday. Here's why that's the wrong goal:",
           body: <<~BODY
@@ -189,7 +189,7 @@ SEED_DATA = [
           description: "A detailed walkthrough of pairing note-taking with AI retrieval.",
           system_prompt: "You are a knowledge-management expert. Write thorough, structured scripts."
         },
-        post: {
+        linkedin_post: {
           title: "Build a second brain",
           hook: "I haven't lost a good idea in 2 years. Here's the system:",
           body: <<~BODY
@@ -266,7 +266,7 @@ SEED_DATA = [
           description: "A personal-finance story script about a successful debt payoff journey.",
           system_prompt: "You are a relatable finance creator. Write warm, honest scripts."
         },
-        post: {
+        linkedin_post: {
           title: "The debt snowball",
           hook: "I paid off $42k in 19 months on an average salary. No side hustle. Here's how:",
           body: <<~BODY
@@ -332,7 +332,7 @@ SEED_DATA = [
           description: "A short, jargon-free explainer on index fund investing.",
           system_prompt: "You are a finance educator. Write clear, beginner-friendly scripts."
         },
-        post: {
+        linkedin_post: {
           title: "Index funds explained",
           hook: "If I could teach my younger self one money lesson, it'd be this:",
           body: <<~BODY
@@ -398,7 +398,7 @@ SEED_DATA = [
           description: "A relaxed take on the 50/30/20 budgeting rule.",
           system_prompt: "You are a friendly finance coach. Write low-pressure, practical scripts."
         },
-        post: {
+        linkedin_post: {
           title: "The 50/30/20 budget",
           hook: "I tracked every expense for a year. Then I quit and did this instead:",
           body: <<~BODY
@@ -475,7 +475,7 @@ SEED_DATA = [
           description: "A script making the case for efficient, time-boxed training.",
           system_prompt: "You are a fitness coach. Write motivating, no-nonsense scripts."
         },
-        post: {
+        linkedin_post: {
           title: "The 20-minute workout",
           hook: "You don't need 90 minutes in the gym. You need 20 minutes, 4x a week.",
           body: <<~BODY
@@ -543,7 +543,7 @@ SEED_DATA = [
           description: "A script on the underrated role of sleep in fitness results.",
           system_prompt: "You are a wellness coach. Write evidence-based, calming scripts."
         },
-        post: {
+        linkedin_post: {
           title: "Sleep is the cheat code",
           hook: "I wasted years on supplements. The real cheat code was free:",
           body: <<~BODY
@@ -607,7 +607,7 @@ SEED_DATA = [
           description: "A practical script on varied, high-protein eating.",
           system_prompt: "You are a nutrition coach. Write simple, actionable scripts."
         },
-        post: {
+        linkedin_post: {
           title: "Protein without boredom",
           hook: "Hitting your protein goal doesn't mean eating chicken and rice 5x a day.",
           body: <<~BODY
@@ -682,7 +682,7 @@ SEED_DATA = [
           description: "A script explaining the real differences between experience levels.",
           system_prompt: "You are a senior engineer and mentor. Write candid, helpful scripts."
         },
-        post: {
+        linkedin_post: {
           title: "Junior vs senior engineers",
           hook: "Senior engineers aren't just better coders. The real gap is somewhere else:",
           body: <<~BODY
@@ -748,7 +748,7 @@ SEED_DATA = [
           description: "A detailed script on strategies for understanding large codebases.",
           system_prompt: "You are an experienced engineer. Write structured, practical scripts."
         },
-        post: {
+        linkedin_post: {
           title: "Reading a giant codebase",
           hook: "Dropped into a 500k-line codebase? Don't read it top to bottom. Do this:",
           body: <<~BODY
@@ -816,7 +816,7 @@ SEED_DATA = [
           description: "A script on the underrated value of writing for engineers.",
           system_prompt: "You are a tech lead. Write reflective, encouraging scripts."
         },
-        post: {
+        linkedin_post: {
           title: "Engineers who write win",
           hook: "The best career move I made as an engineer had nothing to do with code:",
           body: <<~BODY
@@ -893,7 +893,7 @@ SEED_DATA = [
           description: "A script reframing sustainability as small, sustainable habits.",
           system_prompt: "You are a sustainability advocate. Write warm, non-judgemental scripts."
         },
-        post: {
+        linkedin_post: {
           title: "Sustainability without guilt",
           hook: "You don't need a zero-waste pantry to make a difference. Start here:",
           body: <<~BODY
@@ -959,7 +959,7 @@ SEED_DATA = [
           description: "A script unpacking the hidden costs of fast fashion.",
           system_prompt: "You are an ethical-living educator. Write informative, balanced scripts."
         },
-        post: {
+        linkedin_post: {
           title: "The cost of fast fashion",
           hook: "That $5 t-shirt isn't cheap. Someone else is paying for it.",
           body: <<~BODY
@@ -1027,7 +1027,7 @@ SEED_DATA = [
           description: "A how-to script on composting in limited living spaces.",
           system_prompt: "You are a zero-waste coach. Write practical, encouraging scripts."
         },
-        post: {
+        linkedin_post: {
           title: "Composting in an apartment",
           hook: "No backyard? You can still compost. I've done it in a studio flat for 3 years.",
           body: <<~BODY
@@ -1119,8 +1119,8 @@ SEED_DATA.each do |data|
     puts "      Created script: #{script.title}"
 
     # One LinkedIn post per script.
-    post = LinkedinPost.create!(idea_data[:post].merge(script: script))
-    puts "      Created LinkedIn post: #{post.title}"
+    linkedin_post = LinkedinPost.create!(idea_data[:linkedin_post].merge(script: script))
+    puts "      Created LinkedIn post: #{linkedin_post.title}"
 
     # One Twitter post per script.
     twitter_post = TwitterPost.create!(idea_data[:twitter_post].merge(script: script))
