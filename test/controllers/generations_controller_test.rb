@@ -105,6 +105,17 @@ class GenerationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :not_found
   end
 
+  test "a missing chattable redirects back with an alert instead of 404ing" do
+    chat = Chat.create!(purpose: "generate_script") # no chattable
+    chat.messages.create!(role: "user", content: "hi")
+    chat.messages.create!(role: "assistant", content: "sure")
+
+    post chat_generation_path(chat)
+
+    assert_redirected_to chat_path(chat)
+    assert_match(/isn.t linked/i, flash[:alert])
+  end
+
   test "an empty transcript redirects back to the chat with an alert" do
     chat = @user.chats.create!(purpose: "generate_idea") # no user/assistant messages
 

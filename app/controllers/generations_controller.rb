@@ -15,6 +15,16 @@ class GenerationsController < ApplicationController
   def create
     plan  = GenerationPlan.for(@chat)
 
+    # A nil chattable_id means the chat was started without a proper owner
+    # (e.g. navigating directly to /chats/new?purpose=generate_script without
+    # the chattable params). Redirect early rather than letting owner_resolver
+    # call find(nil), which would raise RecordNotFound and 404 — masking the
+    # real cause. A non-nil id that doesn't belong to the current user still
+    # 404s intentionally via the scoped find below (authorization check).
+    if @chat.chattable_id.nil?
+      return redirect_to @chat, alert: "This chat isn't linked to an owner — start it from the correct page."
+    end
+
     # Re-resolve & AUTHORIZE the owner through a user-scoped relation. We read
     # only the chat's stored chattable_id (a bare FK) and never trust the loaded
     # chat.chattable object: the scoped `.find` IS the authorization, raising

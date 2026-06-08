@@ -16,11 +16,9 @@
       </p>
     <% end %>
 
-    <%#
-      `<%==` outputs HTML without escaping — equivalent to `<%= raw ... %>`.
-      Safe here because the string comes from a hardcoded hash, never from
-      user input.
-    %>
+    <%# <%== outputs HTML without escaping — same as raw(). Safe here because                                                                                                                 
+ 20 +        the string comes from a hardcoded hash, never from user input. %>
+ 
     <%
       headline_html = {
         "generate_idea"          => "GENERATE<br>AN IDEA",

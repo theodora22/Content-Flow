@@ -105,4 +105,77 @@ class ChatsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "input[type=hidden][name='chat[purpose]'][value=bogus]", count: 0
   end
+
+  # ── show: purpose-aware headline ──────────────────────────────────────────
+
+  test "show renders GENERATE AN IDEA headline for generate_idea" do
+    chat = @user.chats.create!(purpose: "generate_idea")
+    get chat_path(chat)
+    assert_response :success
+    assert_match "AN IDEA", response.body
+  end
+
+  test "show renders GENERATE A SCRIPT headline for generate_script" do
+    chat = @user.chats.create!(purpose: "generate_script")
+    get chat_path(chat)
+    assert_match "A SCRIPT", response.body
+  end
+
+  test "show renders GENERATE A POST headline for generate_linkedin_post" do
+    chat = @user.chats.create!(purpose: "generate_linkedin_post")
+    get chat_path(chat)
+    assert_match "A POST", response.body
+  end
+
+  test "show renders CHAT headline for a free-form chat" do
+    chat = @user.chats.create!
+    get chat_path(chat)
+    assert_match ">CHAT<", response.body
+  end
+
+  # ── show: save-as button visibility gate ─────────────────────────────────
+
+  test "show does not render the save button for a free-form chat even with an assistant reply" do
+    chat = @user.chats.create!
+    chat.messages.create!(role: "assistant", content: "here you go")
+    get chat_path(chat)
+    assert_select "form[action=?]", chat_generation_path(chat), count: 0
+  end
+
+  test "show does not render the save button when purpose is set but chattable is missing" do
+    chat = Chat.create!(purpose: "generate_script")
+    chat.messages.create!(role: "assistant", content: "here is a script")
+    get chat_path(chat)
+    assert_select "form[action=?]", chat_generation_path(chat), count: 0
+  end
+
+  test "show does not render the save button before any assistant reply" do
+    chat = @user.chats.create!(purpose: "generate_idea")
+    chat.messages.create!(role: "user", content: "give me an idea")
+    get chat_path(chat)
+    assert_select "form[action=?]", chat_generation_path(chat), count: 0
+  end
+
+  test "show renders the save button once an assistant reply exists" do
+    chat = @user.chats.create!(purpose: "generate_idea")
+    chat.messages.create!(role: "user", content: "give me an idea")
+    chat.messages.create!(role: "assistant", content: "here is one")
+    get chat_path(chat)
+    assert_select "form[action=?]", chat_generation_path(chat)
+    assert_select "button", "save as idea"
+  end
+
+  test "show renders save as script label for generate_script" do
+    chat = @user.chats.create!(purpose: "generate_script")
+    chat.messages.create!(role: "assistant", content: "here is a script")
+    get chat_path(chat)
+    assert_select "button", "save as script"
+  end
+
+  test "show renders save as linkedin post label for generate_linkedin_post" do
+    chat = @user.chats.create!(purpose: "generate_linkedin_post")
+    chat.messages.create!(role: "assistant", content: "here is a post")
+    get chat_path(chat)
+    assert_select "button", "save as linkedin post"
+  end
 end

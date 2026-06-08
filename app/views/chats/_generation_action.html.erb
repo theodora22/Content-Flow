@@ -17,6 +17,7 @@
    }[@chat.purpose] %>
 
 <% if save_label &&
+      @chat.chattable.present? &&
       @chat.messages.where(role: "assistant").where.not(content: [nil, ""]).exists? %>
   <div class="mt-8 pt-6 border-t border-[var(--cf-gray-line)]">
     <%= button_to save_label, chat_generation_path(@chat),
