@@ -1,5 +1,15 @@
 <% content_for :title, "Chat" %>
 
+<%# Turbo Drive caches the current page before navigating away. If the user
+    returns, it would show the stale snapshot as a "preview" while the fresh
+    page loads. During that brief window a second turbo-cable-stream-source
+    connects and then immediately disconnects, dropping the real subscription.
+    no-preview disables the preview entirely: Turbo Drive still caches for the
+    back button but never shows it as a live preview. %>
+<% content_for :head do %>
+  <meta name="turbo-cache-control" content="no-preview">
+<% end %>
+
 <%= turbo_stream_from "chat_#{@chat.id}" %>
 
 <div class="min-h-screen bg-[var(--cf-bg)]">
