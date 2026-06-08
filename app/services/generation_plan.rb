@@ -49,6 +49,18 @@ class GenerationPlan
       owner_resolver: ->(id) { current_user_scripts.find(id) },
       persist: ->(owner, attrs) { GenerationPlan.assign_linkedin_post(owner, attrs) },
       redirect_target: ->(record) { script_linkedin_post_path(record.script) }
+    ),
+    "generate_twitter_post" => Plan.new(
+      schema: TwitterPostSchema,
+      owner_resolver: ->(id) { current_user_scripts.find(id) },
+      persist: ->(owner, attrs) { GenerationPlan.assign_twitter_post(owner, attrs) },
+      redirect_target: ->(record) { script_twitter_post_path(record.script) }
+    ),
+    "generate_instagram_post" => Plan.new(
+      schema: InstagramPostSchema,
+      owner_resolver: ->(id) { current_user_scripts.find(id) },
+      persist: ->(owner, attrs) { GenerationPlan.assign_instagram_post(owner, attrs) },
+      redirect_target: ->(record) { script_instagram_post_path(record.script) }
     )
   }.freeze
 
@@ -64,6 +76,18 @@ class GenerationPlan
   # the multi-step build stays readable.
   def self.assign_linkedin_post(script, attrs)
     (script.linkedin_post || script.build_linkedin_post).tap do |post|
+      post.assign_attributes(attrs)
+    end
+  end
+
+  def self.assign_twitter_post(script, attrs)
+    (script.twitter_post || script.build_twitter_post).tap do |post|
+      post.assign_attributes(attrs)
+    end
+  end
+
+  def self.assign_instagram_post(script, attrs)
+    (script.instagram_post || script.build_instagram_post).tap do |post|
       post.assign_attributes(attrs)
     end
   end

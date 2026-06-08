@@ -1,0 +1,49 @@
+<% content_for :title, @twitter_post.title %>
+
+<div class="min-h-screen bg-[var(--cf-bg)]">
+  <div class="px-7 pt-8 pb-14">
+    <nav class="mb-2 cf-meta">
+      <%= link_to "ideas", ideas_path, class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <%= link_to @script.idea.title, idea_path(@script.idea), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <%= link_to @script.title, script_path(@script), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
+      <span class="mx-2">›</span>
+      <span>twitter post</span>
+    </nav>
+
+    <div class="flex justify-between items-start gap-4 mb-10">
+      <h1 class="cf-headline text-[clamp(48px,8vw,120px)]"><%= @twitter_post.title.upcase %></h1>
+      <div class="flex gap-6 shrink-0 pt-2">
+        <%= link_to "edit", edit_script_twitter_post_path(@script),
+              class: "cf-action hover:text-[var(--cf-orange)] transition-colors duration-150" %>
+        <%= link_to "delete", script_twitter_post_path(@script),
+              data: { turbo_method: :delete, turbo_confirm: "Delete this Twitter post?" },
+              class: "cf-action text-[var(--cf-orange)] hover:text-[var(--cf-orange-press)] transition-colors duration-150" %>
+      </div>
+    </div>
+
+    <% if @twitter_post.hook.present? %>
+      <div class="max-w-2xl mb-8">
+        <p class="cf-label mb-2">hook</p>
+        <p class="cf-body whitespace-pre-wrap"><%= @twitter_post.hook %></p>
+      </div>
+    <% end %>
+
+    <% if @twitter_post.body.present? %>
+      <div class="max-w-2xl mb-10">
+        <p class="cf-label mb-2">body</p>
+        <p class="cf-body whitespace-pre-wrap"><%= @twitter_post.body %></p>
+      </div>
+    <% end %>
+
+    <div class="cf-rule mb-8"></div>
+
+    <div class="flex gap-8">
+      <%= link_to "go to dashboard", dashboard_path,
+            class: "bg-[var(--cf-orange)] text-[var(--cf-cream)] cf-label rounded-[var(--cf-radius)] px-8 h-12 inline-flex items-center hover:bg-[var(--cf-orange-press)] active:translate-y-px transition-colors duration-150" %>
+      <%= link_to "create another idea", new_idea_path,
+            class: "cf-action hover:text-[var(--cf-orange)] transition-colors duration-150 self-center" %>
+    </div>
+  </div>
+</div>
