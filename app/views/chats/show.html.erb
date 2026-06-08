@@ -26,14 +26,16 @@
       </p>
     <% end %>
 
-    <%# <%== outputs HTML without escaping — same as raw(). Safe here because                                                                                                                 
+    <%# <%== outputs HTML without escaping — same as raw(). Safe here because
  20 +        the string comes from a hardcoded hash, never from user input. %>
- 
+
     <%
       headline_html = {
         "generate_idea"          => "GENERATE<br>AN IDEA",
         "generate_script"        => "GENERATE<br>A SCRIPT",
-        "generate_linkedin_post" => "GENERATE<br>A POST"
+        "generate_linkedin_post" => "GENERATE<br>A POST",
+        "generate_twitter_post"   => "GENERATE<br>A POST",
+        "generate_instagram_post" => "GENERATE<br>A POST"
       }[@chat.purpose] || "CHAT"
     %>
     <h1 class="cf-headline text-[clamp(72px,13vw,120px)] mt-2 mb-10"><%== headline_html %></h1>
