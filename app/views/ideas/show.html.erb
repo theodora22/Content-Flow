@@ -73,7 +73,7 @@
     <%# ---- Edit form (hidden until pen click) ---- %>
     <div data-idea-edit-target="form" class="hidden opacity-0 flex flex-col justify-end flex-1" style="padding-bottom: 28px;">
       <div class="flex items-end justify-between">
-        <div class="max-w-lg">
+        <div class="max-w-lg w-full">
           <%= form_with model: @idea, class: "flex flex-col gap-4" do |f| %>
             <div class="group relative pb-2" data-idea-edit-target="field">
               <%= f.label :title, "title", class: "cf-h2 font-normal" %>

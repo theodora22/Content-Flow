@@ -61,8 +61,12 @@ export default class extends Controller {
     this.showTarget.style.display = ""
     this.showTarget.style.zIndex = ""
     this.showTarget.style.position = ""
+    this.showTarget.style.height = ""
+    this.showTarget.style.overflow = ""
     this.formTarget.classList.add("hidden")
     this.formTarget.style.opacity = "0"
+    this.formTarget.style.height = ""
+    this.formTarget.style.overflow = ""
     this.penIconTarget.style.transition = ""
     this.penIconTarget.style.transform = ""
     this.penLineTarget.style.width = ""
@@ -77,6 +81,7 @@ export default class extends Controller {
     this.headerTarget.style.zIndex = ""
     this.lineTargets.forEach(line => {
       line.classList.remove("w-full")
+      line.style.width = ""
       line.style.backgroundColor = ""
     })
     this.inputTargets.forEach(input => {
@@ -116,6 +121,10 @@ export default class extends Controller {
       penIcon.style.transform = `translateX(${rollDistance}px) rotate(720deg)`
     }, 500)
 
+    // Lock showTarget height so it doesn't collapse when parts become position: fixed
+    this.showTarget.style.height = `${this.showTarget.offsetHeight}px`
+    this.showTarget.style.overflow = "hidden"
+    
     const parts = [...this.showPartTargets].reverse()
     const allPartsGone = this.dropElements(parts, {
       duration: 0.7,
@@ -126,31 +135,42 @@ export default class extends Controller {
     })
 
     setTimeout(() => {
+      const fields = [...this.fieldTargets].reverse()
+      
+      // 1. Position all fields off-screen while the form is still hidden
+      fields.forEach((field) => {
+        const dropFrom = window.innerHeight
+        field.style.transition = "none"
+        field.style.transform = `translateY(-${dropFrom}px)`
+        field.style.opacity = "0"
+      })
+
+      // 2. Make the form visible (fields render off-screen instantly)
       this.formTarget.classList.remove("hidden")
       this.formTarget.style.opacity = "1"
 
-      const fields = [...this.fieldTargets].reverse()
-      fields.forEach((field, index) => {
-        const dropFrom = window.innerHeight
-        field.style.transform = `translateY(-${dropFrom}px)`
-        field.style.opacity = "0"
-
-        setTimeout(() => {
-          field.style.transition = "transform 0.8s cubic-bezier(0.22, 0, 0.6, 1), opacity 0.3s ease"
-          field.style.transform = "translateY(0)"
-          field.style.opacity = "1"
-        }, index * 200)
+      // 3. Animate fields down using nested requestAnimationFrames to ensure layout sync
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          fields.forEach((field, index) => {
+            setTimeout(() => {
+              field.style.transition = "transform 0.8s cubic-bezier(0.22, 0, 0.6, 1), opacity 0.3s ease"
+              field.style.transform = "translateY(0)"
+              field.style.opacity = "1"
+            }, index * 200)
+          })
+        })
       })
 
-      const fieldsLanded = this.fieldTargets.length * 200 + 400
+      const fieldsLanded = this.fieldTargets.length * 200 + 800
 
       this.lineTargets.forEach((line, index) => {
         setTimeout(() => {
           line.classList.add("w-full")
-        }, fieldsLanded + index * 150)
+        }, fieldsLanded + index * 350)
       })
 
-      const totalLineTime = fieldsLanded + this.lineTargets.length * 150 + 400
+      const totalLineTime = fieldsLanded + this.lineTargets.length * 350 + 700
 
       setTimeout(() => {
         this.lineTargets.forEach((line) => {
@@ -208,6 +228,10 @@ export default class extends Controller {
     const fields = [...this.fieldTargets].reverse()
     this.clearDropStyles(fields)
 
+    // Lock form height so it doesn't collapse when fields become fixed
+    this.formTarget.style.height = `${this.formTarget.offsetHeight}px`
+    this.formTarget.style.overflow = "hidden"
+
     requestAnimationFrame(() => {
       const fieldsGone = this.dropElements(fields)
 
@@ -230,6 +254,8 @@ export default class extends Controller {
         show.style.display = ""
         show.style.zIndex = "1"
         show.style.position = "relative"
+        show.style.height = ""
+        show.style.overflow = ""
 
         const parts = [...this.showPartTargets].reverse()
         const stagger = 200
