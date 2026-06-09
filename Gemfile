@@ -39,7 +39,7 @@ gem "image_processing", "~> 2.0"
 
 gem "devise"
 gem "feedjira"
-gem 'ruby_llm', '~> 1.15'
+gem 'ruby_llm', '~> 1.16'
 gem 'ruby_llm-schema'
 group :development, :test do
   gem "dotenv-rails"
