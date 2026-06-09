@@ -5,9 +5,12 @@
     <%= f.label :name, "name", class: "cf-h2 font-normal" %>
     <%= f.text_field :name,
       readonly: !editable,
-      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'}",
+      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
       placeholder: "your name...",
-      data: { form_reveal_target: "input" } %>
+      data: { 
+        form_reveal_target: "input",
+        action: "input->form-reveal#updatePreview"
+      } %>
     <span data-form-reveal-target="line" class="absolute bottom-0 left-0 h-px w-0 bg-black transition-all duration-700 ease-in-out"></span>
   </div>
 
@@ -15,9 +18,12 @@
     <%= f.label :topic, "what do you create content about?", class: "cf-h2 font-normal" %>
     <%= f.text_field :topic,
       readonly: !editable,
-      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'}",
+      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
       placeholder: "e.g. fitness, cooking, tech...",
-      data: { form_reveal_target: "input" } %>
+      data: { 
+        form_reveal_target: "input",
+        action: "input->form-reveal#updatePreview"
+      } %>
     <span data-form-reveal-target="line" class="absolute bottom-0 left-0 h-px w-0 bg-black transition-all duration-700 ease-in-out"></span>
   </div>
 
@@ -25,9 +31,12 @@
     <%= f.label :goal, "what is your content goal?", class: "cf-h2 font-normal" %>
     <%= f.text_field :goal,
       readonly: !editable,
-      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'}",
+      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
       placeholder: "e.g. grow my audience, land clients...",
-      data: { form_reveal_target: "input" } %>
+      data: { 
+        form_reveal_target: "input",
+        action: "input->form-reveal#updatePreview"
+      } %>
     <span data-form-reveal-target="line" class="absolute bottom-0 left-0 h-px w-0 bg-black transition-all duration-700 ease-in-out"></span>
   </div>
 
@@ -35,10 +44,13 @@
     <%= f.label :audience, "who is your target audience?", class: "cf-h2 font-normal" %>
     <%= f.text_field :audience,
       readonly: !editable,
-      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'}",
+      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
       placeholder: "e.g. beginners, small business owners...",
-      data: { form_reveal_target: "input" } %>
-    <span data-form-reveal-target="line" class="absolute bottom-0 left-0 h-px w-0 bg-black transition-all duration-700 ease-in-out"></span>
+      data: { 
+        form_reveal_target: "input",
+        action: "input->form-reveal#updatePreview"
+      } %>
+    <span data-form-reveal-target="line" class="absolute bottom-0 go-down h-px w-0 bg-black transition-all duration-700 ease-in-out"></span>
   </div>
 
   <% if editable %>

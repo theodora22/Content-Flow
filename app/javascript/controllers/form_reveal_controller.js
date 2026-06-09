@@ -42,4 +42,30 @@ export default class extends Controller {
       document.getElementById("creator-form").requestSubmit()
     }, 400)
   }
+
+  updatePreview(event) {
+    const match = event.target.name.match(/creator\[(\w+)\]/)
+    if (!match) return
+    const field = match[1]
+    const previewElement = document.getElementById(`preview-${field}`)
+    if (previewElement) {
+      if (field === 'audience') {
+        previewElement.textContent = event.target.value ? `"${event.target.value}"` : '"Not specified yet"'
+      } else {
+        previewElement.textContent = event.target.value || (field === 'name' ? 'Anonymous Creator' : 'Not specified yet')
+      }
+    }
+
+    // Dynamic initials update
+    if (field === 'name') {
+      const nameVal = event.target.value.trim()
+      const initials = nameVal
+        ? nameVal.split(/\s+/).map(word => word[0]).join('').toUpperCase().slice(0, 2)
+        : 'CF'
+      const initialsElement = document.getElementById('preview-initials')
+      if (initialsElement) {
+        initialsElement.textContent = initials
+      }
+    }
+  }
 }
