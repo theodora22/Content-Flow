@@ -1,7 +1,7 @@
 <% content_for :title, @script.title %>
 
 <div class="flex flex-col" style="height: calc(100vh - 64px);" data-controller="script-edit">
-  <div class="px-7 pt-2 flex flex-col flex-1 overflow-hidden">
+  <div class="px-7 pt-2 flex flex-col flex-1 overflow-hidden min-h-0">
     <%= link_to idea_path(@idea), class: "cf-meta inline-flex items-center gap-2 hover:text-[var(--cf-orange)] transition-colors duration-150", style: "position: relative; z-index: 20; cursor: pointer;" do %>
       <%= image_tag "arrow.svg", style: "width: 20px; height: 20px; transform: rotate(180deg); pointer-events: none;", alt: "" %>
       <span style="pointer-events: none;">go back</span>
@@ -23,32 +23,33 @@
     </div>
 
     <%# ---- Show content ---- %>
-    <div class="overflow-hidden pb-8">
-    <div data-script-edit-target="show">
+    <div class="overflow-hidden" style="margin-top: 15px;">
+    <div data-script-edit-target="show" class="pb-8 relative flex-1 flex flex-col">
+      <div class="flex flex-col flex-1 overflow-y-auto pr-7 -mr-7 pb-32 pt-2">
       <div data-script-edit-target="showPart" class="flex gap-6 cf-meta mb-8">
         <% if @script.style.present? %><span data-script-edit-target="showStyle"><%= @script.style %></span><% end %>
         <% if @script.length.present? %><span data-script-edit-target="showLength"><%= @script.length %></span><% end %>
       </div>
-
       <% if @script.description.present? %>
-        <div data-script-edit-target="showPart" class="max-w-2xl mb-10">
+        <div data-script-edit-target="showPart" class="max-w-2xl mb-10" data-controller="see-full-script">
           <p class="cf-h2 font-normal mb-2">description</p>
-          <p class="cf-body" data-script-edit-target="showDescription"><%= @script.description %></p>
+          <p class="cf-body whitespace-pre-wrap cf-line-clamp-3" data-script-edit-target="showDescription" data-see-full-script-target="text"><%= @script.description %></p>
+          <button type="button" data-see-full-script-target="button" data-action="click->see-full-script#toggle" class="cf-meta hover:text-[var(--cf-orange)] mt-2 cursor-pointer bg-transparent border-none p-0">see full script</button>
         </div>
       <% end %>
 
       <% if @script.system_prompt.present? %>
-        <div data-script-edit-target="showPart" class="max-w-2xl mb-10">
+        <div data-script-edit-target="showPart" class="max-w-2xl mb-10" data-controller="see-full-script">
           <p class="cf-h2 font-normal mb-2">system prompt</p>
-          <p class="cf-body whitespace-pre-wrap" data-script-edit-target="showSystemPrompt"><%= @script.system_prompt %></p>
+          <p class="cf-body whitespace-pre-wrap cf-line-clamp-3" data-script-edit-target="showSystemPrompt" data-see-full-script-target="text"><%= @script.system_prompt %></p>
+          <button type="button" data-see-full-script-target="button" data-action="click->see-full-script#toggle" class="cf-meta hover:text-[var(--cf-orange)] mt-2 cursor-pointer bg-transparent border-none p-0">see full script</button>
         </div>
       <% end %>
-
       <div data-script-edit-target="showPart">
         <div class="flex justify-between items-end mb-1">
           <p class="cf-h2 font-normal">your posts</p>
           <div class="flex items-end gap-6">
-            <p class="cf-h2 font-normal">turn scipt into a post:</p>
+            <p class="cf-h2 font-normal">turn script into a post:</p>
             <%= link_to new_script_linkedin_post_path(@script), class: "icon-platform w-8 h-8 block" do %>
               <svg viewBox="0 0 130.5 130.5" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-8 h-8">
                 <path d="M120.867 0H9.63344C7.07849 0 4.62819 1.01495 2.82157 2.82157C1.01495 4.62819 0 7.07849 0 9.63344V120.867C0 123.422 1.01495 125.872 2.82157 127.678C4.62819 129.485 7.07849 130.5 9.63344 130.5H120.867C123.422 130.5 125.872 129.485 127.678 127.678C129.485 125.872 130.5 123.422 130.5 120.867V9.63344C130.5 7.07849 129.485 4.62819 127.678 2.82157C125.872 1.01495 123.422 0 120.867 0ZM38.8962 111.17H19.2759V48.8469H38.8962V111.17ZM29.0725 40.2103C26.8469 40.1978 24.6749 39.5263 22.8306 38.2805C20.9863 37.0347 19.5524 35.2705 18.7098 33.2106C17.8672 31.1506 17.6536 28.8872 18.0962 26.706C18.5387 24.5249 19.6174 22.5236 21.1962 20.9549C22.775 19.3862 24.7831 18.3204 26.9671 17.8919C29.1511 17.4634 31.4131 17.6914 33.4676 18.5472C35.5221 19.4031 37.277 20.8483 38.5109 22.7005C39.7448 24.5528 40.4024 26.7291 40.4006 28.9547C40.4216 30.4447 40.1424 31.9238 39.5796 33.3036C39.0168 34.6835 38.182 35.9359 37.1249 36.9862C36.0678 38.0366 34.8101 38.8633 33.4266 39.4173C32.0432 39.9712 30.5624 40.2409 29.0725 40.2103ZM111.215 111.224H91.6038V77.1763C91.6038 67.135 87.3353 64.0356 81.8253 64.0356C76.0072 64.0356 70.2978 68.4219 70.2978 77.43V111.224H50.6775V48.8922H69.5456V57.5288H69.7994C71.6934 53.6953 78.3272 47.1431 88.45 47.1431C99.3975 47.1431 111.224 53.6409 111.224 72.6722L111.215 111.224Z" fill="var(--fill-0, black)"/>
@@ -67,8 +68,7 @@
             <% end %>
           </div>
         </div>
-        <div class="cf-rule"></div>
-
+        <div class="cf-rule mr-7 mt-2 mb-4"></div>
         <% existing = [
              @script.linkedin_post && { post: @script.linkedin_post, icon: "linkedin.svg", label: "linkedin", path: script_linkedin_post_path(@script) },
              @script.twitter_post  && { post: @script.twitter_post,  icon: "twitter.svg",  label: "twitter",  path: script_twitter_post_path(@script) },
@@ -77,7 +77,7 @@
         <% if existing.any? %>
           <div class="flex flex-col">
             <% existing.each do |entry| %>
-              <%= link_to entry[:path], class: "cf-row inline-flex items-center gap-3 py-[18px] cf-label font-normal hover:text-[var(--cf-orange)] transition-colors duration-150" do %>
+              <%= link_to entry[:path], class: "cf-row inline-flex items-center gap-3 py-[18px] cf-label font-normal hover:text-[var(--cf-orange)] transition-colors duration-150 relative" do %>
                 <%= image_tag entry[:icon], class: "w-5 h-5 shrink-0", alt: entry[:label] %>
                 <span><%= entry[:post].title %></span>
               <% end %>
@@ -87,11 +87,12 @@
       </div>
     </div>
     </div>
+    </div>
 
     <%# ---- Edit form (hidden until pen click) ---- %>
-    <div data-script-edit-target="form" class="hidden opacity-0 flex flex-col justify-end" style="min-height: calc(100vh - 180px);">
-      <div class="flex items-end justify-between" style="padding-bottom: 90px;">
-        <div class="max-w-lg">
+    <div data-script-edit-target="form" class="hidden opacity-0 flex flex-col flex-1 min-h-0 pr-7 overflow-y-auto pb-32 pt-4" style="transition: opacity 0.3s ease;">
+      <div class="flex items-end justify-between">
+        <div class="max-w-lg w-full">
           <%= form_with model: @script, url: script_path(@script), class: "flex flex-col gap-1" do |f| %>
             <div class="group relative pb-2" data-script-edit-target="field">
               <%= f.label :title, "title", class: "cf-h2 font-normal" %>
@@ -123,27 +124,35 @@
               <span data-script-edit-target="line" class="absolute bottom-0 left-0 h-px w-0 bg-black transition-all duration-700 ease-in-out"></span>
             </div>
 
-            <div class="group relative pb-2" data-script-edit-target="field">
+            <div class="group relative pb-2" data-script-edit-target="field" data-controller="expand-textarea">
               <%= f.label :description, "description", class: "cf-h2 font-normal" %>
-              <%= f.text_area :description,
-                readonly: true,
-                rows: 1,
-                class: "cf-input cf-input-transparent border-0 rounded-none px-0 outline-none cursor-default h-auto py-3 resize-none overflow-hidden",
-                placeholder: "what is this script about...",
-                style: "field-sizing: content; min-height: 46px;",
-                data: { script_edit_target: "input" } %>
+              <div class="relative w-full">
+                <%= f.text_area :description,
+                  readonly: true,
+                  class: "cf-input cf-input-transparent border-0 rounded-none pl-0 pr-24 outline-none cursor-default h-auto py-1 resize-none overflow-hidden",
+                  placeholder: "what is this script about...",
+                  style: "field-sizing: fixed; height: 64px; min-height: 64px;",
+                  data: { script_edit_target: "input", expand_textarea_target: "input", action: "input->expand-textarea#adjustHeight focus->expand-textarea#expand blur->expand-textarea#collapse" } %>
+                <button type="button" data-expand-textarea-target="button" data-action="click->expand-textarea#toggle" class="absolute bottom-[10px] right-0 cursor-pointer bg-transparent border-none p-0 hidden z-10 group">
+                  <%= image_tag "arrow.svg", style: "width: 20px; height: 20px; transform: rotate(0deg);", class: "pointer-events-none transition-transform duration-300 group-hover:opacity-70", data: { expand_textarea_target: "icon" }, alt: "expand" %>
+                </button>
+              </div>
               <span data-script-edit-target="line" class="absolute bottom-0 left-0 h-px w-0 bg-black transition-all duration-700 ease-in-out"></span>
             </div>
 
-            <div class="group relative pb-2" data-script-edit-target="field">
+            <div class="group relative pb-2" data-script-edit-target="field" data-controller="expand-textarea">
               <%= f.label :system_prompt, "system prompt", class: "cf-h2 font-normal" %>
-              <%= f.text_area :system_prompt,
-                readonly: true,
-                rows: 1,
-                class: "cf-input cf-input-transparent border-0 rounded-none px-0 outline-none cursor-default h-auto py-3 resize-none overflow-hidden",
-                placeholder: "ai instructions for generating this script...",
-                style: "field-sizing: content; min-height: 46px;",
-                data: { script_edit_target: "input" } %>
+              <div class="relative w-full">
+                <%= f.text_area :system_prompt,
+                  readonly: true,
+                  class: "cf-input cf-input-transparent border-0 rounded-none pl-0 pr-24 outline-none cursor-default h-auto py-1 resize-none overflow-hidden",
+                  placeholder: "ai instructions for generating this script...",
+                  style: "field-sizing: fixed; height: 64px; min-height: 64px;",
+                  data: { script_edit_target: "input", expand_textarea_target: "input", action: "input->expand-textarea#adjustHeight focus->expand-textarea#expand blur->expand-textarea#collapse" } %>
+                <button type="button" data-expand-textarea-target="button" data-action="click->expand-textarea#toggle" class="absolute bottom-[10px] right-0 cursor-pointer bg-transparent border-none p-0 hidden z-10 group">
+                  <%= image_tag "arrow.svg", style: "width: 20px; height: 20px; transform: rotate(0deg);", class: "pointer-events-none transition-transform duration-300 group-hover:opacity-70", data: { expand_textarea_target: "icon" }, alt: "expand" %>
+                </button>
+              </div>
               <span data-script-edit-target="line" class="absolute bottom-0 left-0 h-px w-0 bg-black transition-all duration-700 ease-in-out"></span>
             </div>
           <% end %>
