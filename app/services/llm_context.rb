@@ -100,7 +100,7 @@ class LlmContext
 
   def linkedin_guidelines_layer
     <<~TEXT.strip
-      PLATFORM GUIDELINES — LINKEDIN
+      **PLATFORM GUIDELINES — LINKEDIN**
       - Only the first 2-3 lines (~200 characters) show in the feed before a
         "...see more" cut, so the hook has to earn the expand on its own —
         lead with the insight or tension, not a warm-up.
@@ -118,14 +118,14 @@ class LlmContext
 
   def instagram_guidelines_layer
     <<~TEXT.strip
-      SCRIPT GUIDELINES — INSTAGRAM REEL
+      **SCRIPT GUIDELINES — INSTAGRAM REEL**
       - The script is spoken on camera — no emojis, no written-post language.
       - Max 130 words (~45 seconds). Cut everything that isn't essential.
       - Never open with "Hey", "Hello", or a self-introduction.
         Start with a strong hook that earns attention in the first 3 seconds.
       - Structure: hook → one main point → one call-to-action.
 
-      CAPTION GUIDELINES — INSTAGRAM
+      **CAPTION GUIDELINES — INSTAGRAM**
       - Feeds truncate the caption after roughly 125 characters behind a
         "...more" tap, so the hook has to land as a scroll-stopper entirely on
         its own, with no setup from the rest of the caption.
@@ -144,7 +144,7 @@ class LlmContext
 
   def twitter_guidelines_layer
     <<~TEXT.strip
-      PLATFORM GUIDELINES — TWITTER
+      **PLATFORM GUIDELINES — TWITTER**
       - The hook is the opening tweet and must work as a complete, standalone
         thought under 280 characters — most readers see only it in their feed
         and decide whether to expand the thread from it alone.
