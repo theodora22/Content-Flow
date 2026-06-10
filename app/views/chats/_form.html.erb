@@ -1,8 +1,4 @@
 <%= form_with(model: chat, url: chats_path, class: "contents") do |form| %>
-  <%# Carries the chat's purpose + owner through to #create. All three render
-      empty for a plain free-form chat (no purpose/chattable), so that flow is
-      unchanged. The chattable fields are seeded by #new from the generate
-      redirect's params so the created chat keeps its owner (and its context). %>
   <%= form.hidden_field :purpose, value: @purpose %>
   <%= form.hidden_field :chattable_type, value: chat.chattable_type %>
   <%= form.hidden_field :chattable_id, value: chat.chattable_id %>
@@ -17,7 +13,7 @@
     </div>
   <% end %>
 
-  <div class="mb-6">
+  <div class="mb-6 hidden">
     <%= form.label :model, "model", class: "cf-form-label" %>
     <%= form.select :model,
           options_for_select(
@@ -28,14 +24,18 @@
           class: "cf-select mt-2" %>
   </div>
 
-  <div class="mb-8">
-    <%= form.label :prompt, "prompt", class: "cf-form-label" %>
-    <%= form.text_area :prompt, rows: 4,
-          placeholder: "what would you like to discuss?",
-          autofocus: true,
-          value: local_assigns[:seed_prompt],
-          class: "cf-textarea mt-2" %>
+  <div class="fixed bottom-0 left-0 right-0 px-7 pb-8 pt-3 z-10">
+    <div class="flex items-end gap-6">
+      <%= form.text_area :prompt, rows: 1,
+            placeholder: "what would you like to discuss?",
+            autofocus: true,
+            value: local_assigns[:seed_prompt],
+            class: "flex-1 bg-transparent border-none outline-none font-normal py-3 placeholder-[var(--cf-fg-muted)] resize-none overflow-hidden",
+            style: "field-sizing: content; font-size: 52px; line-height: 1; letter-spacing: -0.04em; caret-color: var(--cf-orange);" %>
+      <%= form.button class: "shrink-0 pb-3 cursor-pointer hover:opacity-70 transition-opacity duration-150" do %>
+        <%= image_tag "arrow.svg", style: "width: 28px; height: 28px; pointer-events: none;", alt: "send" %>
+      <% end %>
+    </div>
+    <div class="h-[3px] bg-[var(--cf-orange)] rounded-full"></div>
   </div>
-
-  <%= form.button "start chat", class: "cf-btn-primary bg-[var(--cf-orange)] hover:bg-[var(--cf-orange-press)] active:translate-y-px text-white rounded-full py-4 px-10" %>
 <% end %>

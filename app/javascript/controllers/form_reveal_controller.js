@@ -3,6 +3,20 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["line", "input", "submit", "penIcon", "penLine", "editLabel"]
 
+  connect() {
+    if (!this.hasPenIconTarget) return
+    const penIcon = this.penIconTarget
+    const rollDistance = window.innerWidth - penIcon.getBoundingClientRect().left
+    penIcon.style.transition = "none"
+    penIcon.style.transform = `translateX(${rollDistance}px) rotate(720deg)`
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        penIcon.style.transition = "transform 0.8s cubic-bezier(0.25, 0, 0.6, 1)"
+        penIcon.style.transform = "translateX(0) rotate(0deg)"
+      })
+    })
+  }
+
   reveal() {
     // Same pen exit as idea_edit: label fades, underline collapses, pen rolls off-screen
     if (this.hasEditLabelTarget) this.editLabelTarget.style.opacity = "0"

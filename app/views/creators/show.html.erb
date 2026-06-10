@@ -1,7 +1,7 @@
 <div data-controller="form-reveal">
   <div class="px-7 pt-8 pb-16">
     <%# Page Header %>
-    <div class="flex justify-between items-end gap-4 mb-16">
+    <div class="flex justify-between items-end gap-4 mb-11">
       <h1 class="cf-headline text-[clamp(72px,13vw,120px)]">
         <% if @creator.persisted? %>
           YOUR<br>PROFILE
@@ -68,7 +68,7 @@
           <div class="space-y-6">
             <div>
               <span class="cf-meta uppercase text-[10px] tracking-wider block text-[var(--cf-gray)]">Creator Name</span>
-              <p class="cf-h2 font-bold tracking-tight text-[var(--cf-ink)] border-b border-dashed border-[var(--cf-gray-line)] pb-1 truncate" id="preview-name">
+              <p class="cf-h2 font-bold tracking-tight text-[var(--cf-ink)] border-b border-[var(--cf-gray-line)] pb-1 truncate" id="preview-name">
                 <%= @creator.name.presence || "Anonymous Creator" %>
               </p>
             </div>
@@ -90,7 +90,7 @@
 
             <div>
               <span class="cf-meta uppercase text-[10px] tracking-wider block text-[var(--cf-gray)]">Target Audience</span>
-              <p class="cf-body text-[var(--cf-gray)] italic" id="preview-audience">
+              <p class="cf-body font-bold" id="preview-audience">
                 <%= @creator.audience.present? ? "\"#{@creator.audience}\"" : "\"Not specified yet\"" %>
               </p>
             </div>
