@@ -2,10 +2,7 @@
 
 <div class="flex flex-col min-h-screen" data-controller="form-reveal">
   <div class="px-7 pt-2 pb-20 flex flex-col flex-1 relative">
-    <%= link_to (@script ? script_path(@script) : idea_path(@idea)), class: "cf-meta inline-flex items-center gap-2 hover:text-[var(--cf-orange)] transition-colors duration-150", style: "position: relative; z-index: 20; cursor: pointer; margin-bottom: 10px;" do %>
-      <%= image_tag "arrow.svg", style: "width: 20px; height: 20px; transform: rotate(180deg); pointer-events: none;", alt: "" %>
-      <span style="pointer-events: none;"><%= @script ? "go back to script" : "go back to idea" %></span>
-    <% end %>
+    <%= render "shared/back_link", path: (@script ? script_path(@script) : idea_path(@idea)), label: (@script ? "go back to script" : "go back to idea") %>
 
     <div class="flex justify-between items-start mb-0 relative z-10">
       <h1 class="cf-headline text-[clamp(40px,7vw,64px)]" style="margin-top: 0;"><%= @twitter_post.title.upcase %></h1>

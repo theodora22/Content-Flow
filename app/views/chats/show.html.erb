@@ -13,11 +13,13 @@
 <%= turbo_stream_from "chat_#{@chat.id}" %>
 
 <div class="min-h-screen">
-  <div class="px-7 pt-8">
+  <div class="px-7 pt-2 pb-36">
 
-    <%= link_to chats_path,
-          class: "cf-meta inline-flex items-center gap-2 hover:text-[var(--cf-orange)] transition-colors duration-150" do %>
-      ← go back to chats
+    <% platform_post_purposes = %w[generate_linkedin_post generate_twitter_post generate_instagram_post] %>
+    <% if platform_post_purposes.include?(@chat.purpose) && @chat.chattable.is_a?(Script) %>
+      <%= render "shared/back_link", path: script_path(@chat.chattable), label: "go back to script" %>
+    <% else %>
+      <%= render "shared/back_link", path: chats_path, label: "go back to chats" %>
     <% end %>
 
     <% if notice.present? %>
@@ -33,14 +35,14 @@
       headline_html = {
         "generate_idea"          => "GENERATE<br>AN IDEA",
         "generate_script"        => "GENERATE<br>A SCRIPT",
-        "generate_linkedin_post" => "GENERATE<br>A POST",
-        "generate_twitter_post"   => "GENERATE<br>A POST",
-        "generate_instagram_post" => "GENERATE<br>A POST"
+        "generate_linkedin_post" => "GENERATE<br>LINKEDIN POST",
+        "generate_twitter_post"   => "GENERATE<br>TWITTER POST",
+        "generate_instagram_post" => "GENERATE<br>INSTAGRAM POST"
       }[@chat.purpose] || "CHAT"
     %>
-    <h1 class="cf-headline text-[clamp(72px,13vw,120px)] mt-2 mb-10"><%== headline_html %></h1>
+    <h1 class="cf-headline text-[clamp(72px,13vw,120px)] mb-10" style="margin-top: 10px;"><%== headline_html %></h1>
 
-    <div id="messages" class="space-y-4 mb-8">
+    <div id="messages" class="space-y-4 mb-8" data-controller="chat-scroll">
       <% @chat.messages.where.not(id: nil).each do |message| %>
         <%= render message %>
       <% end %>

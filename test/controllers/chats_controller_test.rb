@@ -121,10 +121,10 @@ class ChatsControllerTest < ActionDispatch::IntegrationTest
     assert_match "A SCRIPT", response.body
   end
 
-  test "show renders GENERATE A POST headline for generate_linkedin_post" do
+  test "show renders GENERATE LINKEDIN POST headline for generate_linkedin_post" do
     chat = @user.chats.create!(purpose: "generate_linkedin_post")
     get chat_path(chat)
-    assert_match "A POST", response.body
+    assert_match "LINKEDIN POST", response.body
   end
 
   test "show renders CHAT headline for a free-form chat" do

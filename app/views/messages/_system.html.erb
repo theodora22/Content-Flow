@@ -1,10 +1,10 @@
 <% system ||= local_assigns[:message] %>
-<div id="message_<%= system.id %>" class="w-full sm:w-auto my-5 space-y-3 rounded-md px-3 py-2 bg-gray-50 border border-gray-200">
-  <div>
-    <span class="inline-block rounded px-2 py-0.5 text-xs font-medium bg-gray-200 text-gray-700">
-      System
-    </span>
-  </div>
-
-  <div class="cf-body cf-prose text-gray-700"><%= markdown(system.content) %></div>
+<div id="message_<%= system.id %>">
+  <details class="group">
+    <summary class="cf-meta text-[var(--cf-gray)] cursor-pointer list-none inline-flex items-center gap-2 hover:text-[var(--cf-orange)] transition-colors duration-150 select-none">
+      <%= image_tag "arrow.svg", style: "width: 12px; height: 12px;", class: "transition-transform duration-200 group-open:rotate-90", alt: "" %>
+      system prompt
+    </summary>
+    <div class="cf-body cf-prose mt-3 text-[var(--cf-gray)] whitespace-pre-wrap text-sm"><%= system.content %></div>
+  </details>
 </div>
