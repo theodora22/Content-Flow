@@ -415,3 +415,12 @@
 .liquid-btn:hover .liquid-fill {
   clip-path: inset(0 0 0 0);
 }
+
+@keyframes platform-arrow-jump {
+  0%   { transform: translateY(0); }
+  40%  { transform: translateY(-4px); }
+  100% { transform: translateY(0); }
+}
+.platform-arrow-jump {
+  animation: platform-arrow-jump 1.4s ease-in-out infinite;
+}

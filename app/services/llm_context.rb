@@ -109,10 +109,14 @@ class LlmContext
       - Tone is professional but personal and first-person — credible and
         value-driven, sharing a lesson or point of view. Avoid hype, buzzwords,
         and engagement-bait phrasing.
-      - Title is an internal label for this app only — it is never shown on
-        LinkedIn, so it doesn't need to read like part of the post.
       - Close with a question or invitation to discuss, and 3-5 relevant
         hashtags on their own line at the end.
+
+      **TITLE — HARD LIMIT**
+      The title is an internal app label only; it is never shown on LinkedIn.
+      It MUST be 4-5 words maximum. No colons, no subtitles, no long phrases.
+      Bad: "AI MEETS SPORTS: ENHANCING PERFORMANCE AND PRODUCTIVITY"
+      Good: "AI in sports content"
     TEXT
   end
 
@@ -129,8 +133,6 @@ class LlmContext
       - Feeds truncate the caption after roughly 125 characters behind a
         "...more" tap, so the hook has to land as a scroll-stopper entirely on
         its own, with no setup from the rest of the caption.
-      - Title is an internal label for this app only — it is never shown on
-        Instagram, so it doesn't need to read like part of the caption.
       - Write the body in short lines with blank lines between thoughts; a
         wall of text reads as skippable on a phone, broken-up lines don't.
       - Tone is casual, visual-first, and personal — like talking to a
@@ -139,6 +141,12 @@ class LlmContext
       - Close with 3-5 hashtags that are actually relevant to this post
         (not a generic stack of 30) and one clear call-to-action: save,
         share, comment, or follow.
+
+      **TITLE — HARD LIMIT**
+      The title is an internal app label only; it is never shown on Instagram.
+      It MUST be 4-5 words maximum. No colons, no subtitles, no long phrases.
+      Bad: "AI MEETS SPORTS: ENHANCING PERFORMANCE AND PRODUCTIVITY"
+      Good: "AI in sports content"
     TEXT
   end
 
@@ -156,6 +164,12 @@ class LlmContext
         rather than building up to it.
       - Use hashtags sparingly, if at all (0-2, woven into a sentence) —
         stacking them at the end reads as spam on this platform.
+
+      **TITLE — HARD LIMIT**
+      The title is an internal app label only; it is never shown on Twitter.
+      It MUST be 4-5 words maximum. No colons, no subtitles, no long phrases.
+      Bad: "AI MEETS SPORTS: ENHANCING PERFORMANCE AND PRODUCTIVITY"
+      Good: "AI in sports content"
     TEXT
   end
 end

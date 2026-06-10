@@ -1,8 +1,21 @@
 <% content_for :title, "New chat" %>
 
-<div class="min-h-screen">
-  <div class="px-7 pt-8">
-    <h1 class="cf-headline text-[clamp(72px,13vw,120px)] mb-10">NEW<br>CHAT</h1>
+<div class="flex flex-col" style="height: calc(100vh - 64px);">
+  <div class="px-7 pt-2 pb-36 flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+    <% platform_post_purposes = %w[generate_linkedin_post generate_twitter_post generate_instagram_post] %>
+    <% if platform_post_purposes.include?(@purpose) && @chat.chattable.is_a?(Script) %>
+      <%= render "shared/back_link", path: script_path(@chat.chattable), label: "go back to script" %>
+    <% end %>
+    <%
+      new_headline = {
+        "generate_linkedin_post"  => "NEW<br>LINKEDIN POST",
+        "generate_twitter_post"   => "NEW<br>TWITTER POST",
+        "generate_instagram_post" => "NEW<br>INSTAGRAM POST",
+        "generate_script"         => "NEW<br>SCRIPT",
+        "generate_idea"           => "NEW<br>IDEA"
+      }[@purpose] || "NEW<br>CHAT"
+    %>
+    <h1 class="cf-headline text-[clamp(72px,13vw,120px)] mb-10"><%== new_headline %></h1>
 
     <%= render "form", chat: @chat, seed_prompt: @seed_prompt %>
   </div>

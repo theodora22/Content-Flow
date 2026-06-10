@@ -36,7 +36,7 @@ class ChatsController < ApplicationController
       @chat.create_user_message(prompt)
       ChatResponseJob.perform_later(@chat.id)
 
-      redirect_to @chat, notice: "Chat was successfully created."
+      redirect_to @chat
     end
   end
 

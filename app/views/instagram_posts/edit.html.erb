@@ -2,17 +2,7 @@
 
 <div class="min-h-screen">
   <div class="px-7 pt-8 pb-14">
-    <nav class="mb-8 cf-meta">
-      <%= link_to "ideas", ideas_path, class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
-      <span class="mx-2">›</span>
-      <%= link_to @script.idea.title, idea_path(@script.idea), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
-      <span class="mx-2">›</span>
-      <%= link_to @script.title, script_path(@script), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
-      <span class="mx-2">›</span>
-      <%= link_to @instagram_post.title, script_instagram_post_path(@script), class: "hover:text-[var(--cf-ink)] transition-colors duration-150" %>
-      <span class="mx-2">›</span>
-      <span>edit</span>
-    </nav>
+    <%= render "shared/back_link", path: script_instagram_post_path(@script), label: "go back to post" %>
 
     <h1 class="cf-headline text-[clamp(48px,8vw,120px)] mb-16">EDIT POST</h1>
 
