@@ -12,19 +12,19 @@
 
       <% if @creator.persisted? %>
         <button type="button" data-action="form-reveal#reveal" class="edit-pen-btn flex flex-col items-center shrink-0">
-          <div class="w-14 h-14">
+          <div data-form-reveal-target="penIcon" class="w-14 h-14">
             <svg class="pen-icon-svg w-full h-full" preserveAspectRatio="none" overflow="visible" style="display: block;" viewBox="0 0 808.169 808.169" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M404.085 261.319L546.851 404.085M47.1694 761V582.542L582.542 47.1694L761 225.627L225.627 761H47.1694Z" stroke="var(--stroke-0, black)" stroke-width="50" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
-          <div class="w-14 mt-1 h-0.5 overflow-hidden transition-all duration-500 ease-in-out">
+          <div data-form-reveal-target="penLine" class="w-14 mt-1 h-0.5 overflow-hidden transition-all duration-500 ease-in-out">
             <div class="pen-line-inner w-14 h-0.5">
               <svg class="w-full h-full" preserveAspectRatio="none" overflow="visible" style="display: block;" viewBox="0 0 761 31.4463" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <line x1="15.7231" y1="15.7231" x2="745.277" y2="15.7231" stroke="var(--stroke-0, black)" stroke-width="31.4463" stroke-linecap="round"/>
               </svg>
             </div>
           </div>
-          <span class="edit-label cf-meta mt-1 w-14 text-center tracking-[0.3em]">edit</span>
+          <span data-form-reveal-target="editLabel" class="edit-label cf-meta mt-1 w-14 text-center tracking-[0.3em]">edit</span>
         </button>
       <% end %>
     </div>
@@ -32,23 +32,12 @@
     <%# Main Grid Content %>
     <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-start mt-8">
       <%# Left Column: Form %>
-      <div class="md:col-span-7 max-w-xl">
+      <div class="md:col-span-7 max-w-xl md:mt-12">
         <%= render "form", creator: @creator, editable: !@creator.persisted? %>
-        
-        <% if @creator.persisted? %>
-          <div class="mt-8">
-            <button type="button" 
-                    data-form-reveal-target="submit" 
-                    data-action="form-reveal#submit" 
-                    class="shrink-0 opacity-0 pointer-events-none rounded-[10px] border-2 border-[var(--cf-ink)] bg-transparent text-[var(--cf-ink)] px-8 py-3.5 cf-action font-normal cursor-pointer transition-all duration-300 ease-in-out hover:bg-[var(--cf-accent)] hover:border-[var(--cf-accent)] hover:text-[var(--cf-cream)]">
-              update profile
-            </button>
-          </div>
-        <% end %>
       </div>
 
       <%# Right Column: Visual Identity Card %>
-      <div class="md:col-span-5 md:mt-12 sticky top-8">
+      <div class="md:col-span-5 md:mt-4 sticky top-8">
         <div class="bg-[var(--cf-white)] p-8 border-2 border-black shadow-[16px_16px_0px_0px_#000] rounded-[32px] relative overflow-hidden transition-all duration-300 hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[20px_20px_0px_0px_#000]">
           <!-- Card Header -->
           <div class="flex justify-between items-start border-b border-[var(--cf-gray-line)] pb-4 mb-6">
@@ -63,9 +52,16 @@
                 initials = parts.map { |p| p[0] }.join("").upcase[0..1] if parts.any?
               end
             %>
-            <div id="preview-initials" class="w-10 h-10 rounded-full bg-[var(--cf-orange)] flex items-center justify-center text-[var(--cf-cream)] font-bold text-lg">
-              <%= initials %>
-            </div>
+            <label id="avatar-label" for="creator_avatar" title="upload a profile image"
+                   class="shrink-0 <%= 'cursor-pointer' unless @creator.persisted? %>">
+              <div id="preview-avatar" class="w-10 h-10 rounded-full bg-[var(--cf-orange)] flex items-center justify-center text-[var(--cf-cream)] font-bold text-lg overflow-hidden">
+                <% if @creator.avatar.attached? %>
+                  <%= image_tag @creator.avatar, alt: "#{@creator.name} avatar", class: "w-full h-full object-cover" %>
+                <% else %>
+                  <span id="preview-initials"><%= initials %></span>
+                <% end %>
+              </div>
+            </label>
           </div>
 
           <!-- Card Body -->
@@ -100,6 +96,17 @@
             </div>
           </div>
         </div>
+
+        <% if @creator.persisted? %>
+          <div class="mt-10 flex justify-end">
+            <button type="button"
+                    data-form-reveal-target="submit"
+                    data-action="form-reveal#submit"
+                    class="shrink-0 opacity-0 pointer-events-none rounded-[10px] border-2 border-[var(--cf-ink)] bg-transparent text-[var(--cf-ink)] px-8 py-3.5 cf-action font-normal cursor-pointer transition-all duration-300 ease-in-out hover:bg-[var(--cf-accent)] hover:border-[var(--cf-accent)] hover:text-[var(--cf-cream)]">
+              update profile
+            </button>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

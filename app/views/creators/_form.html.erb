@@ -50,8 +50,20 @@
         form_reveal_target: "input",
         action: "input->form-reveal#updatePreview"
       } %>
-    <span data-form-reveal-target="line" class="absolute bottom-0 go-down h-px w-0 bg-black transition-all duration-700 ease-in-out"></span>
+    <span data-form-reveal-target="line" class="absolute bottom-0 left-0 h-px w-0 bg-black transition-all duration-700 ease-in-out"></span>
   </div>
+
+  <%# Hidden upload input — triggered by clicking the avatar circle in the
+      identity card, which is a <label for="creator_avatar"> pointing here.
+      It must live inside the form so the file is submitted with it. %>
+  <%= f.file_field :avatar,
+    accept: "image/*",
+    disabled: !editable,
+    class: "hidden",
+    data: {
+      form_reveal_target: "input",
+      action: "change->form-reveal#updateAvatar"
+    } %>
 
   <% if editable %>
     <%= f.submit creator.persisted? ? "update" : "create profile",
