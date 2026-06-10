@@ -28,6 +28,10 @@ class CreatorsController < ApplicationController
   private
 
   def creator_params
-    params.require(:creator).permit(:name, :topic, :goal, :audience, :show)
+    params.require(:creator).permit(:name, :topic, :goal, :audience, :show, :avatar).tap do |permitted|
+      # An untouched file field submits a blank value; without this an update
+      # that doesn't pick a new photo would clobber the existing attachment.
+      permitted.delete(:avatar) if permitted[:avatar].blank?
+    end
   end
 end
