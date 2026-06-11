@@ -19,9 +19,18 @@ class SubstackPostsController < ApplicationController
   end
 
   def refresh
-    current_user.substack_sources.each do |source|
-      FetchSubstackSourceJob.perform_later(source.id) if source.stale?
-    end
-    redirect_to substack_posts_path, notice: "Refreshing sources — check back in a moment."
+    stale_sources = current_user.substack_sources.select(&:stale?)
+    stale_sources.each { |source| FetchSubstackSourceJob.perform_later(source.id) }
+
+    # Sources inside the 1-hour cooldown are skipped, so be honest about
+    # whether anything was actually enqueued instead of always claiming
+    # "refreshing".
+    notice =
+      if stale_sources.any?
+        "Refreshing #{helpers.pluralize(stale_sources.size, 'source')} — new posts will appear in a moment."
+      else
+        "Your feed is already up to date — sources refresh at most once an hour."
+      end
+    redirect_to substack_posts_path, notice: notice
   end
 end

@@ -14,13 +14,15 @@
       <div class="shrink-0 flex flex-col items-end gap-3 pb-2">
         <%# Refresh is a POST to the collection route /substack_posts/refresh.
             We use form_with (not link_to) because it must be a POST, not a GET.
-            The Stimulus "refresh" controller swaps the button label on click
-            to give immediate feedback while the page reloads.
-            data-controller goes on the form; data-action + data-target go on the submit. %>
-        <%= form_with url: refresh_substack_posts_path, method: :post,
-              data: { controller: "refresh" } do |f| %>
+            data-turbo-submits-with is built into Turbo: once the submission has
+            actually started it swaps the button label to this text and disables
+            the button, then restores it when the response renders. (Disabling
+            the button ourselves in a click handler would run *before* the
+            browser submits the form — and a disabled button can't submit, so
+            the request would never be sent.) %>
+        <%= form_with url: refresh_substack_posts_path, method: :post do |f| %>
           <%= f.submit "refresh",
-                data: { refresh_target: "button", action: "click->refresh#spin" },
+                data: { turbo_submits_with: "refreshing..." },
                 class: "cf-action font-normal bg-transparent border-0 cursor-pointer hover:text-[var(--cf-orange)] transition-colors duration-150" %>
         <% end %>
 

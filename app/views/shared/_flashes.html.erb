@@ -1,14 +1,22 @@
+<%# Full-screen feedback overlay: an icon for instant recognition plus the
+    flash text so the user knows *what* happened (not just that something
+    succeeded). The wrapper fades in/out via the fade-overlay keyframes and the
+    flash Stimulus controller removes it after the same delay — keep the
+    animation duration and data-flash-delay-value in sync. %>
 <% if notice %>
-  <div data-controller="flash" data-flash-delay-value="1200" class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none" style="animation: fade-overlay 1.2s ease forwards;">
+  <div data-controller="flash" data-flash-delay-value="2400" class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-5 pointer-events-none" style="animation: fade-overlay 2.4s ease forwards;">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--cf-orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 160px; height: 160px; background: rgba(200,200,200,0.5); border-radius: 50%; padding: 30px;">
       <polyline points="4 12 9 17 20 6" style="stroke-dasharray: 30; stroke-dashoffset: 30; animation: draw-check 0.5s ease forwards 0.2s;"/>
     </svg>
+    <p class="cf-label font-normal bg-[var(--cf-cream)] rounded-[10px] px-5 py-3 text-center max-w-md"><%= notice %></p>
   </div>
 <% end %>
 <% if alert %>
-  <div data-controller="flash" data-flash-delay-value="1200" class="fixed inset-0 z-50 flex items-center justify-center pointer-events-none" style="animation: fade-overlay 1.2s ease forwards;">
+  <div data-controller="flash" data-flash-delay-value="2400" class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-5 pointer-events-none" style="animation: fade-overlay 2.4s ease forwards;">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--cf-orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width: 160px; height: 160px; background: rgba(200,200,200,0.5); border-radius: 50%; padding: 30px;">
-      <polyline points="4 12 9 17 20 6" style="stroke-dasharray: 30; stroke-dashoffset: 30; animation: draw-check 0.5s ease forwards 0.2s;"/>
+      <line x1="6" y1="6" x2="18" y2="18" style="stroke-dasharray: 24; stroke-dashoffset: 24; animation: draw-check 0.5s ease forwards 0.2s;"/>
+      <line x1="18" y1="6" x2="6" y2="18" style="stroke-dasharray: 24; stroke-dashoffset: 24; animation: draw-check 0.5s ease forwards 0.45s;"/>
     </svg>
+    <p class="cf-label font-normal bg-[var(--cf-cream)] rounded-[10px] px-5 py-3 text-center max-w-md"><%= alert %></p>
   </div>
 <% end %>

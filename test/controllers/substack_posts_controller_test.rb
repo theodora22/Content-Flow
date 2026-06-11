@@ -55,12 +55,25 @@ class SubstackPostsControllerTest < ActionDispatch::IntegrationTest
       post refresh_substack_posts_path
     end
     assert_redirected_to substack_posts_path
+    assert_match(/refreshing 1 source/i, flash[:notice])
   end
 
-  test "refresh skips a freshly-fetched source" do
+  test "refresh skips a freshly-fetched source and says the feed is up to date" do
     @source.update_columns(fetched_at: 5.minutes.ago)
     assert_no_enqueued_jobs(only: FetchSubstackSourceJob) do
       post refresh_substack_posts_path
+    end
+    assert_redirected_to substack_posts_path
+    assert_match(/already up to date/i, flash[:notice])
+  end
+
+  test "refresh button uses turbo_submits_with for its loading state" do
+    # Disabling the button in a click handler would cancel the submission
+    # before it starts (a disabled button can't submit a form), so the
+    # loading state must come from Turbo's data-turbo-submits-with instead.
+    get substack_posts_path
+    assert_select "form[action=?]", refresh_substack_posts_path do
+      assert_select "input[type=submit][data-turbo-submits-with='refreshing...']"
     end
   end
 
