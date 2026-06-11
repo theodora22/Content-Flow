@@ -182,13 +182,6 @@ SEED_DATA = [
         title: "Building a second brain with AI",
         topic: "Knowledge Management",
         description: "How to combine note-taking systems with AI to never lose a good idea again.",
-        script: {
-          title: "Your AI-Powered Second Brain",
-          style: "educational",
-          length: "long",
-          description: "A detailed walkthrough of pairing note-taking with AI retrieval.",
-          custom_instructions: "You are a knowledge-management expert. Write thorough, structured scripts."
-        },
         linkedin_post: {
           title: "Build a second brain",
           hook: "I haven't lost a good idea in 2 years. Here's the system:",
@@ -391,13 +384,6 @@ SEED_DATA = [
         title: "The 50/30/20 budget, simplified",
         topic: "Budgeting",
         description: "How to split your income without tracking every single coffee.",
-        script: {
-          title: "Budgeting Without the Spreadsheet",
-          style: "conversational",
-          length: "short",
-          description: "A relaxed take on the 50/30/20 budgeting rule.",
-          custom_instructions: "You are a friendly finance coach. Write low-pressure, practical scripts."
-        },
         linkedin_post: {
           title: "The 50/30/20 budget",
           hook: "I tracked every expense for a year. Then I quit and did this instead:",
@@ -600,13 +586,6 @@ SEED_DATA = [
         title: "Protein without the chicken-and-rice boredom",
         topic: "Nutrition",
         description: "Simple ways to hit protein targets without eating the same meal daily.",
-        script: {
-          title: "Eat Enough Protein, Stay Sane",
-          style: "educational",
-          length: "short",
-          description: "A practical script on varied, high-protein eating.",
-          custom_instructions: "You are a nutrition coach. Write simple, actionable scripts."
-        },
         linkedin_post: {
           title: "Protein without boredom",
           hook: "Hitting your protein goal doesn't mean eating chicken and rice 5x a day.",
@@ -809,13 +788,6 @@ SEED_DATA = [
         title: "The career-defining power of writing",
         topic: "Soft Skills",
         description: "Why clear writing quietly accelerates engineering careers.",
-        script: {
-          title: "Why Engineers Should Write",
-          style: "conversational",
-          length: "short",
-          description: "A script on the underrated value of writing for engineers.",
-          custom_instructions: "You are a tech lead. Write reflective, encouraging scripts."
-        },
         linkedin_post: {
           title: "Engineers who write win",
           hook: "The best career move I made as an engineer had nothing to do with code:",
@@ -1020,13 +992,6 @@ SEED_DATA = [
         title: "Composting in a tiny apartment",
         topic: "Zero Waste",
         description: "Yes, you can compost without a backyard — here's how.",
-        script: {
-          title: "Small-Space Composting",
-          style: "educational",
-          length: "short",
-          description: "A how-to script on composting in limited living spaces.",
-          custom_instructions: "You are a zero-waste coach. Write practical, encouraging scripts."
-        },
         linkedin_post: {
           title: "Composting in an apartment",
           hook: "No backyard? You can still compost. I've done it in a studio flat for 3 years.",
@@ -1102,9 +1067,15 @@ SEED_DATA.each do |data|
   creator = Creator.create!(data[:creator].merge(user: user))
   puts "  Created creator: #{creator.name} (#{creator.topic})"
 
-  # --- Ideas → Scripts → LinkedIn posts ---------------------------------------
+  # --- Ideas → content chain (scripted or direct) ----------------------------
   # Idea belongs_to :user (there's no creator_id column), so each idea is tied
   # to the user we just created.
+  #
+  # Two flows exist side-by-side:
+  #   Scripted: idea_data includes a :script hash → Script is created first,
+  #             then posts receive `script: script`.
+  #   Direct:   idea_data omits :script → posts receive `idea: idea` directly,
+  #             and no Script record is created.
   data[:ideas].each do |idea_data|
     idea = Idea.create!(
       user: user,
@@ -1114,21 +1085,26 @@ SEED_DATA.each do |data|
     )
     puts "    Created idea: #{idea.title}"
 
-    # One script per idea.
-    script = Script.create!(idea_data[:script].merge(idea: idea))
-    puts "      Created script: #{script.title}"
+    if idea_data[:script]
+      # Scripted flow: idea → script → posts.
+      script = Script.create!(idea_data[:script].merge(idea: idea))
+      puts "      Created script: #{script.title}"
+      parent     = { script: script }
+      flow_label = "via script"
+    else
+      # Direct flow: idea → posts (no script created).
+      parent     = { idea: idea }
+      flow_label = "via idea (direct)"
+    end
 
-    # One LinkedIn post per script.
-    linkedin_post = LinkedinPost.create!(idea_data[:linkedin_post].merge(script: script))
-    puts "      Created LinkedIn post: #{linkedin_post.title}"
+    linkedin_post = LinkedinPost.create!(idea_data[:linkedin_post].merge(parent))
+    puts "      Created LinkedIn post: #{linkedin_post.title} (#{flow_label})"
 
-    # One Twitter post per script.
-    twitter_post = TwitterPost.create!(idea_data[:twitter_post].merge(script: script))
-    puts "      Created Twitter post: #{twitter_post.title}"
+    twitter_post = TwitterPost.create!(idea_data[:twitter_post].merge(parent))
+    puts "      Created Twitter post: #{twitter_post.title} (#{flow_label})"
 
-    # One Instagram post per script.
-    instagram_post = InstagramPost.create!(idea_data[:instagram_post].merge(script: script))
-    puts "      Created Instagram post: #{instagram_post.title}"
+    instagram_post = InstagramPost.create!(idea_data[:instagram_post].merge(parent))
+    puts "      Created Instagram post: #{instagram_post.title} (#{flow_label})"
   end
 
   puts ""
