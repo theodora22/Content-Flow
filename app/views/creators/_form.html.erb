@@ -3,11 +3,13 @@
 <%= form_with model: creator, url: creator_path, id: "creator-form", class: "flex flex-col gap-4" do |f| %>
   <div class="group relative pb-2">
     <%= f.label :name, "name", class: "cf-h2 font-normal" %>
-    <%= f.text_field :name,
+    <%= f.text_area :name,
+      rows: 1,
       readonly: !editable,
-      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
+      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none resize-none h-auto py-1 #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
       placeholder: "your name...",
-      data: { 
+      style: "field-sizing: content; min-height: 34px;",
+      data: {
         form_reveal_target: "input",
         action: "input->form-reveal#updatePreview"
       } %>
@@ -16,11 +18,13 @@
 
   <div class="group relative pb-2">
     <%= f.label :topic, "what do you create content about?", class: "cf-h2 font-normal" %>
-    <%= f.text_field :topic,
+    <%= f.text_area :topic,
+      rows: 1,
       readonly: !editable,
-      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
+      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none resize-none h-auto py-1 #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
       placeholder: "e.g. fitness, cooking, tech...",
-      data: { 
+      style: "field-sizing: content; min-height: 34px;",
+      data: {
         form_reveal_target: "input",
         action: "input->form-reveal#updatePreview"
       } %>
@@ -29,11 +33,13 @@
 
   <div class="group relative pb-2">
     <%= f.label :goal, "what is your content goal?", class: "cf-h2 font-normal" %>
-    <%= f.text_field :goal,
+    <%= f.text_area :goal,
+      rows: 1,
       readonly: !editable,
-      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
+      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none resize-none h-auto py-1 #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
       placeholder: "e.g. grow my audience, land clients...",
-      data: { 
+      style: "field-sizing: content; min-height: 34px;",
+      data: {
         form_reveal_target: "input",
         action: "input->form-reveal#updatePreview"
       } %>
@@ -42,11 +48,13 @@
 
   <div class="group relative pb-2">
     <%= f.label :audience, "who is your target audience?", class: "cf-h2 font-normal" %>
-    <%= f.text_field :audience,
+    <%= f.text_area :audience,
+      rows: 1,
       readonly: !editable,
-      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
+      class: "cf-input border-0 rounded-none bg-transparent px-0 outline-none resize-none h-auto py-1 #{editable ? 'cursor-text' : 'cursor-default'} focus:ring-0",
       placeholder: "e.g. beginners, small business owners...",
-      data: { 
+      style: "field-sizing: content; min-height: 34px;",
+      data: {
         form_reveal_target: "input",
         action: "input->form-reveal#updatePreview"
       } %>
