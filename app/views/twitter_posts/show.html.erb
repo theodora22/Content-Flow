@@ -5,7 +5,7 @@
     <%= render "shared/back_link", path: (@script ? script_path(@script) : idea_path(@idea)), label: (@script ? "go back to script" : "go back to idea") %>
 
     <div class="flex justify-between items-start mb-0 relative z-10">
-      <h1 class="cf-headline text-[clamp(40px,7vw,64px)]" style="margin-top: 0;"><%= @twitter_post.title.upcase %></h1>
+      <h1 class="cf-headline text-[clamp(40px,7vw,64px)]" style="margin-top: 0; margin-bottom: 40px;"><%= @twitter_post.title.upcase %></h1>
       <div class="shrink-0 pt-2">
         <button type="button" data-action="form-reveal#reveal" class="edit-pen-btn flex flex-col items-center shrink-0">
           <div class="w-14 h-14">
